@@ -1,0 +1,21 @@
+.logoutButtonWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    display: flex;
+    min-width: 100%;
+    justify-content: space-around;
+    align-items: center;
+    top: 0;
+    position: absolute;
+    .navbar {
+        display: flex;
+
+        .heading {
+            display: inline-block;
+        }
+    }
+}

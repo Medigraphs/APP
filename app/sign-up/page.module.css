@@ -1,0 +1,19 @@
+/* components/AuthForm.module.css */
+.formContainer {
+    width: 300px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 20px;
+}
+
+.toggleLink {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-left: 5px;
+  }
+
+  .error {
+    color: red;
+    margin-top: 5px;
+  }
