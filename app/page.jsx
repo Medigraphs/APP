@@ -14,7 +14,7 @@ export default function Home() {
 
   const [user] = useAuthState(auth);
   const router = useRouter()
-  const [userSession, setUserSession] = useState(false);
+  const [userSession, setUserSession] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -27,11 +27,9 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (user) {
       setUserSession(() => sessionStorage.getItem('user'));
-    }
-    console.log(sessionStorage)
-  }, [user]);
+    console.log(userSession, user) 
+  })
 
   // if (!user && !userSession){
   //   router.push('/sign-in')
@@ -44,7 +42,7 @@ export default function Home() {
       ) :
       (<><Header/>
       <main className={styles.main}>
-        {user && userSession ?  <AddPatientForm /> : <SignIn />}
+        {userSession ?  <AddPatientForm /> : <SignIn />}
       </main></>)}
     </>
   )

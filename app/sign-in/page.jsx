@@ -1,4 +1,3 @@
-'use client'
 import { useEffect, useState } from 'react';
 import {useSignInWithEmailAndPassword} from 'react-firebase-hooks/auth'
 import {auth} from '@/app/firebase/firebase'
@@ -17,7 +16,6 @@ const SignIn = () => {
   }
 
   useEffect(() => {
-    console.log(loggedInUser, loginError)
     if (loginError?.code === "auth/invalid-credential") {
       setError("Invalid Credentials!");
     }
@@ -27,7 +25,7 @@ const SignIn = () => {
     }
 
     if (loggedInUser) {
-      console.log({loggedInUser});
+      console.log("signin", {loggedInUser});
       sessionStorage.setItem('user', true);
     }
   }, [loading, loggedInUser, loginError]);

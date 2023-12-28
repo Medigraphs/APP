@@ -7,11 +7,11 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 export const Header = () => {
     const [user] = useAuthState(auth);
-    const [userSession, setUserSession] = useState(undefined);
+    const [userSession, setUserSession] = useState(false);
 
     useEffect (() => {
         setUserSession(() => sessionStorage.getItem('user'));
-    }, [user, userSession]);
+    });
     return (
         <header className={styles.header}>
             <nav className={styles.navbar}>
@@ -19,7 +19,7 @@ export const Header = () => {
             </nav>
             <div className={styles.logoutButtonWrapper}>
 
-                {user && userSession ? <button onClick={() => {
+                {userSession ? <button onClick={() => {
                     signOut(auth)
                     sessionStorage.removeItem('user')
                 }}>

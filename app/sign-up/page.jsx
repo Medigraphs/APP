@@ -1,4 +1,3 @@
-'use client'
 import { useEffect, useState } from 'react';
 import {useCreateUserWithEmailAndPassword} from 'react-firebase-hooks/auth'
 import {auth} from '@/app/firebase/firebase';
@@ -22,7 +21,7 @@ const SignUp = () => {
       alert("User registered successfully.");
       router.push('/');
     }
-  }, [loading])
+  }, [loading, registeredUser, creationError])
 
   const onToggle = () => {
     router.push('/')
