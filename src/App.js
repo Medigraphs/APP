@@ -1,16 +1,17 @@
 import './App.css';
 import Footer from './components/footer/footer';
+import Main from './components/main/blog';
 import Navbar from './components/navbar/navbar';
+import SideMenu from './components/menu/sideMenu/sideMenu';
 
 function App() {
   return (
     <div className="App">
       <Navbar />
-      {/* Creating basic layout of landing page */}
       <div className='container'>
       <div className="menu-navbar">menu</div>
-      <div className="menu">menu</div>
-      <div className="main">main</div>
+      <SideMenu />
+      <Main />
       <Footer/>
       </div>
     </div>

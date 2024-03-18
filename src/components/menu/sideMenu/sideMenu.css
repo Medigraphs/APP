@@ -1,0 +1,11 @@
+.filter-form-container{
+    background-color: white;
+    min-width: 20rem;
+    padding-bottom: 2rem;
+}
+
+.sideMenu-form{
+    display: flex;
+    flex-direction: column;
+    padding-inline-start: 1rem;
+}
