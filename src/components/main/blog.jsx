@@ -25,6 +25,7 @@ const Main = () => {
         return <h1>Loading ...</h1>
     }
     return <div className="main">
+        
         {fetchBlog.blog.data?.article.map((data) => (
             <div className="main-container" key={data._id}>
                 <div className="image-container">

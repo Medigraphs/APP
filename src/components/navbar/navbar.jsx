@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './navbar.css';
+import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
 function Navbar() {
+
+    const [isCookieNull, setIsCookieNull] = useState(true);
+
+  const handleLogout = () => {
+    Cookies.remove("jwt");
+    setIsCookieNull(true); // Update the state to reflect logout status
+  };
+
+  useEffect(() => {
+    if (Cookies.get("jwt")) {
+      setIsCookieNull(false);
+    }
+  }, [isCookieNull]);
 
     return <nav className="navbar">
         <div className="container-1">
@@ -18,10 +33,11 @@ function Navbar() {
             <button className="menu-button material-symbols-outlined">menu</button>
             <button className="close-button material-symbols-outlined">close</button>
         <div className="container-3">
-            <a className="link" href="#Home">Home</a>
-            <a className="link" href="#contact-us">contact us</a>
-            <a className="link" href="#Login">Login</a>
-            <a className="link" href="#Logout">Logout</a>
+            <Link className="link" to={`/`}>Home</Link>
+            <Link className="link" to={`/contact-us`}>Contact us</Link>
+            <Link className="link" to={`/login`} style={{'display': isCookieNull ? 'block' : 'none'}}>Login</Link>
+            <Link className="link" to={`/profile`} style={{'display': isCookieNull ? 'none' : 'block'}}>Profile</Link>
+            <Link className="link" to={`/logout`} onClick={handleLogout} style={{'display': isCookieNull ? 'none' : 'block'}}>Logout</Link>
         </div>
         </div>
     </nav>

@@ -1,8 +1,3 @@
-.menu-navbar {
-    grid-area: menu-navbar;
-    display: none;
-}
-
 .sideMenu {
     grid-area: sideMenu;
     width: 20rem;
@@ -12,16 +7,12 @@
     grid-area: main;
 }
 
-.footer {
-    grid-area: footer;
-}
 
 
 .container {
     display: grid;
     grid-template-areas:
-        'sideMenu main'
-        'footer footer';
+        'sideMenu main';
     grid-gap: 10px;
     padding: 10px;
     grid-template-columns: auto auto;
@@ -33,8 +24,7 @@
         display: grid;
         grid-template-areas:
             'sideMenu'
-            'main'
-            'footer ';
+            'main';
         gap: 10px;
         padding: 10px;
         grid-template-columns: auto;
