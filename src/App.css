@@ -5,15 +5,11 @@
 
 .sideMenu {
     grid-area: sideMenu;
-    width: 13rem;
+    width: 20rem;
 }
 
 .main {
-    display: grid;
     grid-area: main;
-    grid-template-columns: auto auto auto auto;
-    grid-column-gap: 10px;
-    grid-row-gap: 10px;
 }
 
 .footer {
@@ -24,28 +20,15 @@
 .container {
     display: grid;
     grid-template-areas:
-        'sideMenu main main main'
-        'sideMenu footer footer footer';
-    gap: 10px;
+        'sideMenu main'
+        'footer footer';
+    grid-gap: 10px;
     padding: 10px;
+    grid-template-columns: auto auto;
 }
 
-@media only screen and (max-width: 1232px) {
-    .main {
-        grid-template-columns: auto auto auto;
-    }
-}
-
-@media only screen and (max-width: 1024px) {
-    .main {
-        grid-template-columns: auto auto;
-    }
-}
 
 @media only screen and (max-width: 768px) {
-    .main {
-        grid-template-columns: auto auto auto;
-    }
     .container {
         display: grid;
         grid-template-areas:
@@ -54,23 +37,14 @@
             'footer ';
         gap: 10px;
         padding: 10px;
+        grid-template-columns: auto;
     }
     .sideMenu{
         width: 100%;
     }
 }
 
-@media only screen and (max-width: 640px) {
-    .main {
-        grid-template-columns: auto auto;
-    }
-}
 
-@media only screen and (max-width: 425px) {
-    .main {
-        grid-template-columns: auto;
-    }
-}
 /* @media only screen and (max-width: 1232px) {
 
     .menu-navbar {

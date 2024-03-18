@@ -1,3 +1,10 @@
+.main {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+}
+
 .main-container{
     background-color: white;
     padding: 1rem 1rem 1rem;
@@ -17,4 +24,26 @@
 
 .date-time-container{
     display: flex;
+}
+
+.blog-link{
+    text-decoration: none;
+}
+
+@media only screen and (max-width: 1232px) {
+    .main {
+        grid-template-columns: auto auto auto;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .main {
+        grid-template-columns: auto auto;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .main {
+        grid-template-columns: auto;
+    }
 }

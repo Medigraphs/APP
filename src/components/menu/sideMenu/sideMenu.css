@@ -23,6 +23,7 @@
 
 @media only screen and (max-width: 768px){
     .sideMenu-form{
+        display: none;
         flex-direction: row;
         justify-content: space-evenly;
         padding-top: 1rem;
