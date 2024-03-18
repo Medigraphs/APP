@@ -2,6 +2,8 @@ import React from "react";
 
 export const Profile = () =>{
     return (
-        <div>Profile</div>
+        <div className="profile-supreme-container">
+            <div className="profile-container"></div>
+        </div>
     )
 }

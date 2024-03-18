@@ -4,6 +4,7 @@ import { login } from "../../store/loginSlice";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import './login.css';
+import { Link } from "react-router-dom";
 
 export const Login = () => {
     const dispatch = useDispatch();
@@ -21,6 +22,7 @@ export const Login = () => {
             setCookie('jwtInCookie', jwt, {
                 expires: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
             });
+            navigate('/profile');
         }
     }, [state, jwt]);
 
@@ -64,6 +66,9 @@ export const Login = () => {
                 <button type="submit" disabled={loginButton === "wait..."} className="login-button">
                     {loginButton}
                 </button>
+                <div>
+                    <p className="register-link-para">Don't have an account ? <Link className="register-link-btn" to={'/register'}>Register now</Link></p>
+                </div>
             </form>
             </div>
         </div>

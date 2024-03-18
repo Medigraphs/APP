@@ -9,6 +9,7 @@ import BlogDetail from "./components/blogDetail/blogDetail";
 import { Login } from './components/login/login';
 import { Profile } from './components/profile/profile';
 import {ContactUs} from './components/contactUs/contactUs';
+import {Register} from './components/register/register';
 
 function App() {
   return (
@@ -20,8 +21,9 @@ function App() {
               <Route exact path='/' element={<Main />} />
               <Route path='/blogDetail/:_id' element={<BlogDetail />} />
               <Route path='contact-us' element={<ContactUs/>}/>
-              <Route path='/login' element={<Login/>}/>
               <Route path='/profile' element={<Profile />} />
+              <Route path='/login' element={<Login/>}/>
+              <Route path='/register' element={<Register/>}/>
             </Routes>
           <Footer />
         </div>

@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/logoutSlice";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   //Functioning for Logout(Starting)
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(['jwtInCookie']);
 
@@ -15,6 +17,7 @@ function Navbar() {
     await dispatch(logout(cookies.jwtInCookie));
     removeCookie('jwtInCookie', { path: '/' });
     setIsAuthenticated(false);
+    navigate('/');
   };
 
   useEffect(() => {
@@ -52,8 +55,8 @@ function Navbar() {
         <input type="checkbox" className="check-box" name="check" id="check" />
         <button className="menu-button material-symbols-outlined">menu</button>
         <button className="close-button material-symbols-outlined">close</button>
-        <div className="container-3">
-          <Link className="link" to={`/`}>
+        <div className="container-3" >
+          <Link className="link" to={`/`} >
             Home
           </Link>
           <Link className="link" to={`/contact-us`}>
