@@ -13,8 +13,10 @@ const Main = () => {
     const [fetchBlog, setFetchBlog] = useState(state);
 
     useEffect(() => {
+        if(!state.blog.data){
             dispatch(fetchBlogs());
-    }, []);
+        }
+    }, [dispatch]);
 
     useEffect(() => {
         setFetchBlog(state);
