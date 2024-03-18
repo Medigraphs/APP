@@ -21,7 +21,9 @@ export const Profile = () => {
     }
 
     useEffect(() => {
-        fetchData();
+        if(!getUser.data){
+            fetchData();
+        }
     }, []);
     
     useEffect(()=>{
