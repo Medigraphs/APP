@@ -1,36 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./blog.css";
+import { fetchBlogs } from "../../store/blogSlice";
+
 
 const Main = () => {
-
-    const [blog, setBlog] = useState(null);
-    const [loaded, setLoaded] = useState(false);
-
-    const fetchBlog = async () => {
-        await fetch("https://blog-zo8s.vercel.app/app/v2/getArticles").then((res) => {
-            res.json().then((res) => {
-                console.log(res);
-                //Updating data in useState.
-                setBlog(res.article);
-                setLoaded(true);
-            }).catch((err) => {
-                console.log(err);
-            })
-        }).catch((err) => {
-            console.log(err);
-        })
-    }
+    const dispatch = useDispatch();
+    const state = useSelector((state) => state);
+    const [fetchBlog, setFetchBlog] = useState(state);
 
     useEffect(() => {
-        fetchBlog()
-    }, []);
+        dispatch(fetchBlogs());
+    }, [dispatch]);
 
+    useEffect(() => {
+        setFetchBlog(state);
+    }, [state]);
 
+    console.log(fetchBlog.blog.data?.article);
 
+    if (state.blog.isLoading) {
+        return <h1>Loading ...</h1>
+    }
     return <div className="main">
-        {loaded ? blog.map((data) => (
-            <div className="main-container">
+        {fetchBlog.blog.data?.article.map((data) => (
+            <div className="main-container" key={data._id}>
                 <div className="image-container">
                     <img className='image' src={data.articleImage} alt="" />
                 </div>
@@ -38,9 +34,10 @@ const Main = () => {
                     <h4 className="blog-name">{data.title}</h4>
                     <h6>{data.createdAt}</h6>
                 </div>
-                <p className="blog-description">{data.description.slice(0,150)}...</p>
+                <p className="blog-description">{data.description.slice(0, 150)} ...</p>
+                <Link to={`/blogDetail/${data._id}`}>Read more</Link>
             </div>
-        )) : <h1>Loading ...</h1>}
+        ))}
     </div>
 }
 

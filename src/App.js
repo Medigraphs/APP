@@ -3,36 +3,27 @@ import Footer from './components/footer/footer';
 import Main from './components/main/blog';
 import Navbar from './components/navbar/navbar';
 import SideMenu from './components/menu/sideMenu/sideMenu';
-import { useEffect } from 'react';
+import { Provider } from 'react-redux';
+import store from './store/store';
+import { Routes, Route } from "react-router-dom";
+import blogDetail from "./components/blogDetail/blogDetail";
 
 function App() {
-
-  const fetchApi = async () => {
-    await fetch("https://blog-zo8s.vercel.app/").then((res) => {
-      res.json().then((res) => {
-        console.log(res);
-      }).catch((err) => {
-        console.log(err);
-      })
-    }).catch((err) => {
-      console.log(err);
-    })
-  }
-
-  useEffect(() => {
-    fetchApi()
-  }, []);
-
   return (
-    <div className="App">
-      <Navbar />
-      <div className='container'>
-        <div className="menu-navbar">menu</div>
-        <SideMenu />
-        <Main pro />
-        <Footer />
+    <Provider store={store}>
+      <div className="App">
+        <Navbar />
+        <div className='container'>
+          <div className="menu-navbar">menu</div>
+          <SideMenu />
+          <Main pro />
+          <Footer />
+        </div>
       </div>
-    </div>
+      <Routes>
+        <Route path='/blogDetail/:id' Component={blogDetail} />
+      </Routes>
+    </Provider>
   );
 }
 
