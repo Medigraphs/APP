@@ -74,7 +74,7 @@ function Navbar() {
       setAtProfile(false);
     }
 
-    if (location.pathname === '/login' || location.pathname === '/register') {
+    if (location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/forgetPassword' || location.pathname === '/reset/password') {
       setAtLogin(true);
     } else {
       setAtLogin(false);

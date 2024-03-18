@@ -10,6 +10,8 @@ import { Login } from './components/login/login';
 import { Profile } from './components/profile/profile';
 import {ContactUs} from './components/contactUs/contactUs';
 import {Register} from './components/register/register';
+import {ForgetPassword} from './components/forgetPassword/forgetPassword';
+import { ResetPassword } from './components/resetPassword/resetPassword';
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
               <Route path='/profile' element={<Profile />} />
               <Route path='/login' element={<Login/>}/>
               <Route path='/register' element={<Register/>}/>
+              <Route path='/forgetPassword' element={<ForgetPassword/>}/>
+              <Route path='/reset/password' element={< ResetPassword/>} />
             </Routes>
           <Footer />
         </div>

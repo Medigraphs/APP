@@ -68,6 +68,7 @@ export const Login = () => {
                 </button>
                 <div>
                     <p className="register-link-para">Don't have an account ? <Link className="register-link-btn" to={'/register'}>Register now</Link></p>
+                    <p className="forgetPassword-link-para">Forget password ? <Link className="forgetPassword-link-btn" to={'/forgetPassword'}>Reset now</Link></p>
                 </div>
             </form>
             </div>
