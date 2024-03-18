@@ -5,12 +5,13 @@
 
 .sideMenu {
     grid-area: sideMenu;
+    width: 13rem;
 }
 
 .main {
     display: grid;
     grid-area: main;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto auto auto;
     grid-column-gap: 10px;
     grid-row-gap: 10px;
 }
@@ -29,21 +30,48 @@
     padding: 10px;
 }
 
-@media only screen and(max-width: 1024px) {
-    .container {
-        grid-template-areas:
-            'sideMenu main main main'
-            'sideMenu footer footer footer';
-    }
+@media only screen and (max-width: 1232px) {
     .main {
         grid-template-columns: auto auto auto;
     }
 }
 
-@media only screen and (max-width: 768px) {
-    .sideMenu {
-        display: none;
+@media only screen and (max-width: 1024px) {
+    .main {
+        grid-template-columns: auto auto;
     }
+}
+
+@media only screen and (max-width: 768px) {
+    .main {
+        grid-template-columns: auto auto auto;
+    }
+    .container {
+        display: grid;
+        grid-template-areas:
+            'sideMenu'
+            'main'
+            'footer ';
+        gap: 10px;
+        padding: 10px;
+    }
+    .sideMenu{
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .main {
+        grid-template-columns: auto auto;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .main {
+        grid-template-columns: auto;
+    }
+}
+/* @media only screen and (max-width: 1232px) {
 
     .menu-navbar {
         display: block;
@@ -62,4 +90,4 @@
     .main {
         grid-template-columns: auto auto;
     }
-}
+} */

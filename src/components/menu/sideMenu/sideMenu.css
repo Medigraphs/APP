@@ -1,11 +1,46 @@
-.filter-form-container{
-    background-color: white;
-    min-width: 20rem;
-    padding-bottom: 2rem;
-}
-
 .sideMenu-form{
     display: flex;
     flex-direction: column;
     padding-inline-start: 1rem;
+    padding-bottom: 1.5rem;
+    background-color: white;
+}
+
+.container1, .container2{
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-button{
+    display: none;
+}
+
+.filter-form-container{
+    display: none;
+}
+
+@media only screen and (max-width: 768px){
+    .sideMenu-form{
+        flex-direction: row;
+        justify-content: space-evenly;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    .container1, .container2{
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    .container1-sub, .container2-sub{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .filter-button{
+        display: block;
+    }
+    .filter-button:hover ~ .filter-form-container{
+        display: block;
+    }
 }
