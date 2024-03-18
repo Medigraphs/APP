@@ -236,9 +236,10 @@
     }
 
     .check-box {
-        z-index: 1;
+        z-index: 99999;
         opacity: 0;
-
+        width: 3rem;
+        height: 3rem;
     }
 
     .close-button {
