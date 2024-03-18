@@ -40,7 +40,6 @@ const SideMenu = () => {
     }
 
     return <div className="sideMenu">
-        <div className="filter-form-container" >
             <form action="#" method="get" className="sideMenu-form" >
                 <div className="container1">
                     <h3>Filters</h3>
@@ -74,7 +73,6 @@ const SideMenu = () => {
                 </div>
             </form>
         </div>
-    </div>
 }
 
 export default SideMenu;

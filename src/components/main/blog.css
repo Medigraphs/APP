@@ -11,10 +11,6 @@
     width: 20rem;
 }
 
-/* .supreme-container{
-    height: 100vh;
-} */
-
 .container {
     display: grid;
     grid-template-areas:

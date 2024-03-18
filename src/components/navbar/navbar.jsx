@@ -30,29 +30,6 @@ function Navbar() {
 
   //Functioning for Logout(Ended)
 
-  //Functioning for sticky navbar(Starting)
-  const [isSticky, setSticky] = useState(false);
-
-  const handleScroll = () =>{
-    window.requestAnimationFrame(()=>{
-      if(window.scrollY > 0){
-        setSticky(true);
-      } else{
-        setSticky(false);
-      }
-    })
-  };
-
-  useEffect(()=>{
-    window.addEventListener('scroll', handleScroll);
-
-    return () =>{
-      window.removeEventListener('scroll', handleScroll);
-    };
-  },[]);
-
-  //Functioning for sticky navbar(Ended)
-
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   const handleMenuToggle = () =>{
@@ -64,7 +41,7 @@ function Navbar() {
   }
 
   return (
-    <nav className={`navbar ${isSticky ? "sticky" : ""}`}>
+    <nav className={`navbar`}>
       <div className="container-1">
         <h1 className="container-1-h1">Blog</h1>
       </div>

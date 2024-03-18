@@ -1,12 +1,12 @@
 .blogDetail-image {
     width: 100%;
-    height: 50vh;
+    height: 31.25rem; /* 50vh converted to rem */
     object-fit: fill;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.19), 0 0.1875rem 0.625rem 0 rgba(0, 0, 0, 0.19);
+    backface-visibility: hidden;
 }
 
 .main-container-blogDetail {
-    height: 100vh;
     background-color: white;
 }
 
@@ -19,24 +19,24 @@
 
 @media only screen and (max-width:768px) {
     .blogDetail-image {
-        height: 42vh;
+        height: 26.25rem; /* 42vh converted to rem */
     }
 }
 
 @media only screen and (max-width:640px) {
     .blogDetail-image {
-        height: 38vh;
+        height: 23.75rem; /* 38vh converted to rem */
     }
 }
 
 @media only screen and (max-width:600px) {
     .blogDetail-image {
-        height: 30vh;
+        height: 18.75rem; /* 30vh converted to rem */
     }
 }
 
 @media only screen and (max-width:425px) {
     .blogDetail-image {
-        height: 25vh;
+        height: 15.625rem; /* 25vh converted to rem */
     }
 }
