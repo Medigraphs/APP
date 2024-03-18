@@ -43,23 +43,25 @@ export const Login = () => {
         <div className="login-supreme-container">
             <div className="login-container">
             <form className="login-form-container" onSubmit={handleLogin}>
-                <label htmlFor="email" className="email-label">Email
+                <label htmlFor="email" className="login-email-label">Email
                     <input
                         type="text"
                         value={email}
                         name="email"
                         onChange={(e) => setEmail(e.target.value)}
+                        className="login-email-input"
                     />
                 </label>
-                <label htmlFor="password" className="password-label">Password
+                <label htmlFor="password" className="login-password-label">Password
                     <input
                         type="password"
                         value={password}
                         name="password"
                         onChange={(e) => setPassword(e.target.value)}
+                        className="login-password-input"
                     />
                 </label>
-                <button type="submit" disabled={loginButton === "wait..."}>
+                <button type="submit" disabled={loginButton === "wait..."} className="login-button">
                     {loginButton}
                 </button>
             </form>
