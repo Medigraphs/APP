@@ -22,9 +22,7 @@ const Main = () => {
 
     console.log(fetchBlog.blog.data?.article);
 
-    if (state.blog.isLoading) {
-        return <Loader />
-    }
+
     return <div className='container'>
         <SideMenu />
         <div className="main">
