@@ -67,9 +67,8 @@
     transition: 0.4s ease;
 }
 
-.container-2-search-button {
-    color: white;
-    font-size: 1.5rem;
+.container-2-search-box::-webkit-search-cancel-button{
+    display: none;
 }
 
 .menu-button,
@@ -117,18 +116,32 @@
     padding-right: 1rem;
 }
 
+/* links animation */
+.pre-active-link{
+    text-decoration: none;
+    background-color: white;
+    color: black;
+    font-size: large;
+    border-radius: 0.3rem;
+    padding: 0.5rem 0.8rem;
+    transition: all 0.3s ease-in-out;
+}
+
 .link {
     text-decoration: none;
     color: rgb(255, 255, 255);
     font-size: large;
     padding: 0.5rem 0.8rem;
 }
+
 .link:hover, .link:focus, .link:active {
     background-color: white;
     color: black;
     border-radius: 0.3rem;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.3s ease-in-out;
   }
+
+  /* links animation */
 
 @media only screen and (max-width: 1280px) {
     .navbar {
@@ -176,23 +189,19 @@
 
 @media only screen and (max-width: 768px) {
     .container-2-search-box {
-        width: 10rem;
-        padding: 0.3rem;
+        width: 12rem;
     }
 
     .container-2-search-box:hover {
-        width: 11rem;
+        width: 12.5rem;
     }
 }
 
 @media only screen and (max-width: 640px) {
-    .container-2 {
-        display: none;
-    }
 
     .navbar {
         display: grid;
-        grid-template-columns: auto 7rem;
+        grid-template-columns: 6rem auto 5rem;
     }
 
     .menu-button,
@@ -204,7 +213,7 @@
 
     .container-1-h1 {
         font-size: 1.5rem;
-        padding-left: 3rem;
+        padding-left: 1.25rem;
     }
 
     .container-3 {
@@ -264,5 +273,32 @@
     #check:checked~.close-button {
         opacity: 100%;
         transition: all 0.4s ease;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .container-2-search-box{
+        width: 10rem;
+    }
+    .container-2-search-box:hover{
+        width: 10.5rem;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    .container-2-search-box{
+        width: 8.5rem;
+    }
+    .container-2-search-box:hover{
+        width: 9rem;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .container-2-search-box{
+        width: 7.5rem;
+    }
+    .container-2-search-box:hover{
+        width: 8rem;
     }
 }
