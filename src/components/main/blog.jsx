@@ -1,49 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./blog.css";
 
-const main = () => {
+const Main = () => {
+
+    const [blog, setBlog] = useState(null);
+    const [loaded, setLoaded] = useState(false);
+
+    const fetchBlog = async () => {
+        await fetch("https://blog-zo8s.vercel.app/app/v2/getArticles").then((res) => {
+            res.json().then((res) => {
+                console.log(res);
+                //Updating data in useState.
+                setBlog(res.article);
+                setLoaded(true);
+            }).catch((err) => {
+                console.log(err);
+            })
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+
+    useEffect(() => {
+        fetchBlog()
+    }, []);
+
+
+
     return <div className="main">
-        <div className="main-container">
-            <div className="image-container">
-                <img className='image' src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Somerset_House%2C_London%2C_United_Kingdom_%28Unsplash%29.jpg" alt="" />
+        {loaded ? blog.map((data) => (
+            <div className="main-container">
+                <div className="image-container">
+                    <img className='image' src={data.articleImage} alt="" />
+                </div>
+                <div className="blog-detail-container">
+                    <h4 className="blog-name">{data.title}</h4>
+                    <h6>{data.createdAt}</h6>
+                </div>
+                <p className="blog-description">{data.description.slice(0,150)}...</p>
             </div>
-            <div className="blog-detail-container">
-                <h4 className="blog-name">Blog</h4>
-                <h6>17/03/2023</h6>
-            </div>
-            <p className="blog-description">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
-        </div>
-        <div className="main-container">
-            <div className="image-container">
-                <img className='image' src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Somerset_House%2C_London%2C_United_Kingdom_%28Unsplash%29.jpg" alt="" />
-            </div>
-            <div className="blog-detail-container">
-                <h4 className="blog-name">Blog</h4>
-                <h6>17/03/2023</h6>
-            </div>
-            <p className="blog-description">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
-        </div>
-        <div className="main-container">
-            <div className="image-container">
-                <img className='image' src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Somerset_House%2C_London%2C_United_Kingdom_%28Unsplash%29.jpg" alt="" />
-            </div>
-            <div className="blog-detail-container">
-                <h4 className="blog-name">Blog</h4>
-                <h6>17/03/2023</h6>
-            </div>
-            <p className="blog-description">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
-        </div>
-        <div className="main-container">
-            <div className="image-container">
-                <img className='image' src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Somerset_House%2C_London%2C_United_Kingdom_%28Unsplash%29.jpg" alt="" />
-            </div>
-            <div className="blog-detail-container">
-                <h4 className="blog-name">Blog</h4>
-                <h6>17/03/2023</h6>
-            </div>
-            <p className="blog-description">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
-        </div>
+        )) : <h1>Loading ...</h1>}
     </div>
 }
 
-export default main;
+export default Main;
