@@ -33,7 +33,7 @@ export const Login = () => {
 
     const handleLogin = async (event) => {
         event.preventDefault();
-        setLoginButton("wait...");
+        setLoginButton("Logining...");
         await dispatch(login({ email, password }));
         console.log(email, password);
         setLoginButton("Login");

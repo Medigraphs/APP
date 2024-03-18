@@ -1,0 +1,51 @@
+.profile-supreme-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.profile-container{
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    width: 60vw;
+    background-color: white;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+
+.profile-image-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-image{
+    border-radius: 50%;
+    width: 10rem;
+    height: 10rem;
+    border: 8px solid rgb(199, 199, 199);
+}
+
+.personal-details-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.name-container, .gmail-container, .bio-container, .address-container{
+    display: flex;
+    align-items: center;
+}
+
+.profile-head2{
+    margin-right: 1rem;
+}
+
+.admin-panel-container{
+    margin-top: 0.8rem;
+}
+
+.admin-panel-link{
+    color: black;
+}

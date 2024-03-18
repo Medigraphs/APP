@@ -21,7 +21,7 @@ export const Register = () => {
         if (password === confirmPassword) {
             setCanSubmit(true);
             if (canSubmit) {
-                setRegisterButton("wait...");
+                setRegisterButton("Registering...");
                 await dispatch(register({ username, email, password }));
                 setRegisterButton("Register");
                 setUsername("");

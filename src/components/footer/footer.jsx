@@ -9,10 +9,10 @@ function Footer() {
           Our Address:
         </h2>
         <address>
-          Bazar Nasurrallah khan, <br />
-          Peer ke paith, <br />
-          Rampur, <br />
-          Uttar pradesh <br />
+          27, Daulat bagh <br />
+          Near meraj wali masjid, <br />
+          Moradabad, <br />
+          Uttar Pradesh <br />
         </address>
       </div>
       <div className="social-icon-container">
@@ -20,7 +20,6 @@ function Footer() {
 
         <img className="social-icon" src="https://png.pngtree.com/png-vector/20221018/ourmid/pngtree-instagram-icon-png-image_6315974.png" width="30px" alt="" />
         <img className="social-icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1024px-Facebook_Logo_%282019%29.png" width="30px" alt="" />
-        <img className="social-icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Twitter-logo.svg/768px-Twitter-logo.svg.png?20220821125553" width="30px" alt="" />
         <img className="social-icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/2044px-WhatsApp.svg.png" width="30px" alt="" />
 
         <img src="" width="30px" alt="" />
