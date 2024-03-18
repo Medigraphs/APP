@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/loginSlice";
-import Cookies from "js-cookie";
-import {useNavigate} from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const state = useSelector((state) => state.login);
-    const [JWT, setJWT] = useState(null);
+    const [jwt, setjwt] = useState(null);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loginButton, setLoginButton] = useState("Login");
-    const navigate = useNavigate();
-
-    useEffect(()=>{
-        setJWT(state.data?.token);
-    },[state]);
+    const [cookies, setCookie, removeCookie] = useCookies(['jwtInCookie']);
 
     useEffect(() => {
-        if (JWT) {
-            Cookies.set('jwt', JWT, {
-                expires : new Date(Date.now() + 5 * 24 * 60 * 60* 1000),
+        setjwt(state.data?.token);
+        if (jwt) {
+            setCookie('jwtInCookie', jwt, {
+                expires: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
             });
-            // navigate('/profile');
         }
-    }, [JWT, navigate]);
+    }, [state, jwt]);
+
+    useEffect(() => {
+            setjwt(null);
+            console.log("after", jwt);
+    }, [jwt]);
 
     const handleLogin = async (event) => {
         event.preventDefault();

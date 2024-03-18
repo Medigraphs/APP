@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import blogsReducer from "./blogsSlice";
 import singleBlogReducer from "./singleBlogSlice";
 import loginReducer from "./loginSlice";
+import logoutReducer from "./logoutSlice";
 
 
 const store = configureStore({
@@ -9,6 +10,7 @@ const store = configureStore({
         blog: blogsReducer,
         singleBlog: singleBlogReducer,
         login: loginReducer,
+        logout: logoutReducer,
     }
 })
 

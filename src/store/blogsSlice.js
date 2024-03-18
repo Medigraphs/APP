@@ -2,7 +2,13 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 //Action
 export const fetchBlogs = createAsyncThunk("fetchBlogs", async() =>{
-    let response = await fetch("https://blog-zo8s.vercel.app/app/v2/getArticles");
+    let response = await fetch("https://blog-zo8s.vercel.app/app/v2/getArticles",{
+        method: 'GET',
+        // mode: 'no-cors', //Disable the cors(Cross-Origin resource sharing)
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
     return response.json();
 })
 

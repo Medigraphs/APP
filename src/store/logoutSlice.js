@@ -1,35 +1,37 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchSingleBlog = createAsyncThunk("fetchSingleBlog", async(_id)=>{
-    let response = await fetch(`https://blog-zo8s.vercel.app/app/v2/getSingleArticle/${_id}`,{
-        method: 'GET',
+export const logout = createAsyncThunk("logout", async({jwtInCookie})=>{
+    // console.log(typeof jwtInCookie);
+    let response = await fetch("https://blog-zo8s.vercel.app/app/v1/logout",{
+        method: 'PUT',
         // mode: 'no-cors', //Disable the cors(Cross-Origin resource sharing)
         headers: {
             'Content-Type': 'application/json',
         },
+        body: jwtInCookie,
     });
     return response.json();
 })
 
-const singleBlogSlice = createSlice({
-    name: "singleBlog",
+const logoutSlice = createSlice({
+    name: "logout",
     initialState:{
         isLoading: false,
         data: null,
         isError: false,
     },
     extraReducers: (builder) =>{
-        builder.addCase(fetchSingleBlog.pending, (state, action)=>{
+        builder.addCase(logout.pending, (state, action)=>{
             state.isLoading = true;
             state.data = null;
             state.isError = null;
         })
-        builder.addCase(fetchSingleBlog.fulfilled, (state, action)=>{
+        builder.addCase(logout.fulfilled, (state, action)=>{
             state.isLoading = false;
-            state.data = action.payload;
+            state.data = null;
             state.isError = null;
         })
-        builder.addCase(fetchSingleBlog.rejected, (state, action)=>{
+        builder.addCase(logout.rejected, (state, action)=>{
             state.isLoading = false;
             console.log("Error", action.payload);
             state.isError = true;
@@ -37,4 +39,4 @@ const singleBlogSlice = createSlice({
     }
 })
 
-export default singleBlogSlice.reducer;
+export default logoutSlice.reducer;
