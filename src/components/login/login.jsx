@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/loginSlice";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import './login.css';
 
 export const Login = () => {
     const dispatch = useDispatch();
@@ -24,8 +25,8 @@ export const Login = () => {
     }, [state, jwt]);
 
     useEffect(() => {
-            setjwt(null);
-            console.log("after", jwt);
+        setjwt(null);
+        console.log("after", jwt);
     }, [jwt]);
 
     const handleLogin = async (event) => {
@@ -39,24 +40,30 @@ export const Login = () => {
     };
 
     return (
-        <div className="login-main-container">
-            <form className="login-container" onSubmit={handleLogin}>
-                <input
-                    type="text"
-                    value={email}
-                    name="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <input
-                    type="password"
-                    value={password}
-                    name="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+        <div className="login-supreme-container">
+            <div className="login-container">
+            <form className="login-form-container" onSubmit={handleLogin}>
+                <label htmlFor="email" className="email-label">Email
+                    <input
+                        type="text"
+                        value={email}
+                        name="email"
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </label>
+                <label htmlFor="password" className="password-label">Password
+                    <input
+                        type="password"
+                        value={password}
+                        name="password"
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </label>
                 <button type="submit" disabled={loginButton === "wait..."}>
                     {loginButton}
                 </button>
             </form>
+            </div>
         </div>
     );
 };

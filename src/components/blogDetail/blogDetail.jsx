@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchSingleBlog } from "../../store/singleBlogSlice";
 import './blogDetail.css';
+import Loader from "../loading/loader";
 
 const BlogDetail = () => {
     const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const BlogDetail = () => {
     console.log("singleBlog", fetchBlog);
 
     if (state.isLoading) {
-        return <h1>Loading ...</h1>
+        return <Loader />
     }
 
     const showSecondImage = fetchBlog.data?.article.articleImage.length  < 1;   

@@ -1,38 +1,9 @@
-.sideMenu {
-    grid-area: sideMenu;
-    width: 20rem;
-}
-
-.main {
-    grid-area: main;
-}
 
 
 
-.container {
-    display: grid;
-    grid-template-areas:
-        'sideMenu main';
-    grid-gap: 10px;
-    padding: 10px;
-    grid-template-columns: auto auto;
-}
 
 
-@media only screen and (max-width: 768px) {
-    .container {
-        display: grid;
-        grid-template-areas:
-            'sideMenu'
-            'main';
-        gap: 10px;
-        padding: 10px;
-        grid-template-columns: auto;
-    }
-    .sideMenu{
-        width: 100%;
-    }
-}
+
 
 
 /* @media only screen and (max-width: 1232px) {

@@ -1,0 +1,27 @@
+.login-supreme-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 60rem;
+    height: 30rem;
+}
+
+.login-form-container{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    width: 40rem;
+}
+
+.email-label, .password-label{
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,32 @@
+.loader{
+    /* position: fixed; */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aliceblue;
+    transition: opacity 0.75s, visibility 0.75s;
+}
+
+.loader::after{
+    content: "";
+    width: 5rem;
+    height: 5rem;
+    border: 12px solid #dddddd;
+    border-top-color: rgb(54, 52, 68);
+    border-radius: 50%;
+    animation: loading 0.75s ease infinite;
+}
+
+@keyframes loading {
+    from{
+        transform: rotate(0turn);
+    }
+    to{
+        transform: rotate(1turn);
+    }
+}
+

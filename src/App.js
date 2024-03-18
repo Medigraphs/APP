@@ -2,13 +2,13 @@ import './App.css';
 import Footer from './components/footer/footer';
 import Main from './components/main/blog';
 import Navbar from './components/navbar/navbar';
-import SideMenu from './components/menu/sideMenu/sideMenu';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import BlogDetail from "./components/blogDetail/blogDetail";
 import { Login } from './components/login/login';
 import { Profile } from './components/profile/profile';
+import {ContactUs} from './components/contactUs/contactUs';
 
 function App() {
   return (
@@ -16,15 +16,13 @@ function App() {
       <Provider store={store}>
         <div className="App">
           <Navbar />
-          <div className='container'>
-            <SideMenu />
             <Routes>
               <Route exact path='/' element={<Main />} />
               <Route path='/blogDetail/:_id' element={<BlogDetail />} />
+              <Route path='contact-us' element={<ContactUs/>}/>
               <Route path='/login' element={<Login/>}/>
               <Route path='/profile' element={<Profile />} />
             </Routes>
-          </div>
           <Footer />
         </div>
       </Provider>
