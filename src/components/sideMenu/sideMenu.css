@@ -4,7 +4,8 @@
     padding-inline-start: 1rem;
     padding-bottom: 1.5rem;
     background-color: white;
-    position: sticky;
+    width: 19rem;
+    position: fixed;
     top: 5.6rem;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
     border-radius: 0.5rem;
