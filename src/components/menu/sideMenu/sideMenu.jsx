@@ -40,8 +40,7 @@ const SideMenu = () => {
     }
 
     return <div className="sideMenu">
-        <button className="filter-button">Filter</button>
-        <div className="filter-form-container">
+        <div className="filter-form-container" >
             <form action="#" method="get" className="sideMenu-form" >
                 <div className="container1">
                     <h3>Filters</h3>

@@ -19,9 +19,9 @@ function Navbar() {
             <button className="close-button material-symbols-outlined">close</button>
         <div className="container-3">
             <a className="link" href="#Home">Home</a>
+            <a className="link" href="#contact-us">contact us</a>
             <a className="link" href="#Login">Login</a>
             <a className="link" href="#Logout">Logout</a>
-            <a className="link" href="#contact-us">contact us</a>
         </div>
         </div>
     </nav>
