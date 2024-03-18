@@ -5,25 +5,26 @@ import Navbar from './components/navbar/navbar';
 import SideMenu from './components/menu/sideMenu/sideMenu';
 import { Provider } from 'react-redux';
 import store from './store/store';
-import { Routes, Route } from "react-router-dom";
-import blogDetail from "./components/blogDetail/blogDetail";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import BlogDetail from "./components/blogDetail/blogDetail";
 
 function App() {
   return (
-    <Provider store={store}>
-      <div className="App">
-        <Navbar />
-        <div className='container'>
-          <div className="menu-navbar">menu</div>
-          <SideMenu />
-          <Main pro />
-          <Footer />
+    <Router>
+      <Provider store={store}>
+        <div className="App">
+          <Navbar />
+          <div className='container'>
+            <SideMenu />
+            <Main />
+            <Footer />
+          </div>
         </div>
-      </div>
-      <Routes>
-        <Route path='/blogDetail/:id' Component={blogDetail} />
-      </Routes>
-    </Provider>
+        <Routes>
+          <Route path='/blogDetail/:id' element={<BlogDetail/>}/>
+        </Routes>
+      </Provider>
+    </Router>
   );
 }
 
