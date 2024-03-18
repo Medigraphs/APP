@@ -6,7 +6,7 @@ export const fetchBlogs = createAsyncThunk("fetchBlogs", async() =>{
     return response.json();
 })
 
-const blogSlice = createSlice({
+const blogsSlice = createSlice({
     name: "blog",
     initialState:{
         isLoading: false,
@@ -32,4 +32,5 @@ const blogSlice = createSlice({
     }
 })
 
-export default blogSlice.reducer;
+
+export default blogsSlice.reducer;

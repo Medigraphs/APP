@@ -16,13 +16,13 @@ function App() {
           <Navbar />
           <div className='container'>
             <SideMenu />
-            <Main />
+            <Routes>
+              <Route exact path='/' element={<Main />} />
+              <Route path='/blogDetail/:_id' element={<BlogDetail />} />
+            </Routes>
             <Footer />
           </div>
         </div>
-        <Routes>
-          <Route path='/blogDetail/:id' element={<BlogDetail/>}/>
-        </Routes>
       </Provider>
     </Router>
   );

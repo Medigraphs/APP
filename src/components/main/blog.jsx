@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./blog.css";
-import { fetchBlogs } from "../../store/blogSlice";
+import { fetchBlogs } from "../../store/blogsSlice";
 
 
 const Main = () => {
@@ -32,7 +32,7 @@ const Main = () => {
                 </div>
                 <div className="blog-detail-container">
                     <h4 className="blog-name">{data.title}</h4>
-                    <h6>{data.createdAt}</h6>
+                    <h6>{data.createdAt.slice(0,10)}</h6>
                 </div>
                 <p className="blog-description">{data.description.slice(0, 150)} ...</p>
                 <Link to={`/blogDetail/${data._id}`}>Read more</Link>
