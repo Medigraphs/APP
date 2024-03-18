@@ -5,7 +5,7 @@ import loginReducer from "./loginSlice";
 import logoutReducer from "./logoutSlice";
 import registerReducer from "./registerSlice";
 import profileReducer from "./profileSlice";
-import searchBlogReducer from "./searchBlogSlice";
+import filterBlogsReducer from "./filterBlogsSlice";
 
 const store = configureStore({
     reducer:{
@@ -15,7 +15,7 @@ const store = configureStore({
         login: loginReducer,
         logout: logoutReducer,
         profile: profileReducer,
-        searchBlogs: searchBlogReducer,
+        filterBlogs: filterBlogsReducer,
     }
 })
 

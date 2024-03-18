@@ -9,32 +9,35 @@ import Loader from "../loading/loader";
 
 const Main = () => {
     const dispatch = useDispatch();
-    const state = useSelector((state) => state);
+    //Getting state from blogSlice.js
+    const state = useSelector((state) => state.blog);
     const [fetchBlog, setFetchBlog] = useState(state);
-    const searchResult = useSelector((state) => state.searchBlogs);
-    const [searchFetchBlogs, setSearchFetchBlogs] = useState(searchResult);
 
+    //Getting state from filterBlogsSlice.js
+    const filterResult = useSelector((state) => state.filterBlogs);
+    const [filterFetchBlogs, setFilterFetchBlogs] = useState(filterResult);
+
+    /* initial rendering */
     useEffect(() => {
-        if (!searchFetchBlogs?.data) {
-            dispatch(fetchBlogs());
-        }
-    }, [dispatch, searchFetchBlogs]);
+        dispatch(fetchBlogs());
+    }, [dispatch]);
 
+    /* setting up states */
     useEffect(() => {
         setFetchBlog(state);
-        setSearchFetchBlogs(searchResult);
-    }, [state, searchResult]);
+        setFilterFetchBlogs(filterResult);
+    }, [state, filterResult]);
 
+
+    /* conditional rendering */
     useEffect(() => {
-        if (searchFetchBlogs?.data && fetchBlog?.blog?.data) {
+        if (filterFetchBlogs?.data) {
             setFetchBlog(null);
         }
-    }, [fetchBlog, searchFetchBlogs]);
+    }, [fetchBlogs, filterFetchBlogs]);
 
-    console.log("fetchBlogs", fetchBlog?.blog);
-    console.log("search result ", searchFetchBlogs);
-
-    // console.log(fetchBlog.blog.data?.article);
+    // console.log("fetchBlogs", fetchBlog);
+    // console.log("filter records ", filterFetchBlogs);
 
 
     //Pagination(Start)
@@ -42,7 +45,7 @@ const Main = () => {
     const blogsPerPage = 8;
     const lastIndex = currentPage * blogsPerPage;
     const firstIndex = lastIndex - blogsPerPage;
-    const article = fetchBlog?.blog?.data?.article || searchFetchBlogs?.data?.article;
+    const article = fetchBlog?.data?.article || filterFetchBlogs?.data?.article;
     const records = article?.slice(firstIndex, lastIndex);
     const recordsLength = article?.length;
     const numberOfPages = Math.ceil(recordsLength / blogsPerPage);
@@ -50,10 +53,11 @@ const Main = () => {
     const [isPrevButtonDisabled, setPrevButtonDisabled] = useState(false);
     const [isNextButtonDisabled, setNextButtonDisabled] = useState(false);
 
-    useEffect(() => {
-        console.log(records);
-    }, []);
+    // useEffect(() => {
+    //     console.log(records);
+    // }, []);
 
+    //Handling corner cases for buttons(Started)
     useEffect(() => {
         if (currentPage <= 1) {
             setPrevButtonDisabled(true);
@@ -80,34 +84,35 @@ const Main = () => {
     const nextPages = () => {
         setCurrentPage(currentPage + 1);
     }
+    //Handling corner cases for buttons(Ended)
     //Pagination(End)
 
 
-    if (state.blog?.isLoading || searchFetchBlogs?.isLoading) {
+    if (fetchBlog?.isLoading || filterFetchBlogs?.isLoading) {
         return <Loader />
     }
 
     return <div className={`container`}>
         <SideMenu />
         <div className="main">
-            {records && records.map((data) => (
-                    <div className="main-container" key={data._id}>
-                        <div className="image-container">
-                            <img className="image" src={data.articleImage[0]} alt="" />
-                        </div>
-                        <div className="blog-detail-container">
-                            <h4 className="blog-name">{data.title}</h4>
-                            <h6>{data.createdAt.slice(0, 10)}</h6>
-                        </div>
-                        <p className="blog-description">{data.description.slice(0, 150)} ...</p>
-                        <Link className="blog-link" to={`/blogDetail/${data._id}`}>
-                            Read more
-                        </Link>
+            {records && records.length > 0 && records.map((data) => (
+                <div className="main-container" key={data._id}>
+                    <div className="image-container">
+                        <img className="image" src={data.articleImage[0]} alt="" />
                     </div>
-                ))
+                    <div className="blog-detail-container">
+                        <h4 className="blog-name">{data.title}</h4>
+                        <h6>{data.createdAt.slice(0, 10)}</h6>
+                    </div>
+                    <p className="blog-description">{data.description.slice(0, 150)} ...</p>
+                    <Link className="blog-link" to={`/blogDetail/${data._id}`}>
+                        Read more
+                    </Link>
+                </div>
+            ))
             }
         </div>
-        {searchFetchBlogs && (
+        {filterFetchBlogs && (
             <div className="pages-button-container">
                 <button
                     className="blog-previous-button"

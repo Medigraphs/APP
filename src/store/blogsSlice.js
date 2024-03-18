@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
 //Action
 export const fetchBlogs = createAsyncThunk("fetchBlogs", async() =>{
     let response = await fetch("https://blog-zo8s.vercel.app/app/v2/getArticles",{

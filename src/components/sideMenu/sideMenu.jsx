@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "./sideMenu.css";
+import { useDispatch, useSelector } from "react-redux";
+import { filterBlogs } from "../../store/filterBlogsSlice";
 
 const SideMenu = () => {
+
+    const dispatch = useDispatch();
 
     const [food, setFood] = useState(true);
     const [travel, setTravel] = useState(true);
     const [politics, setPolitics] = useState(true);
     const [technology, setTechnology] = useState(true);
-    // const [recentBlogs, setRecentBlog] = useState(true);
-    // const [trendingBlogs, setTrendingBlog] = useState(true);
     const [isFormNull, setIsFormNull] = useState(true);
 
     const [formData, setFormData] = useState({
-        // type: null,
         food: null,
         travel: null,
         politics: null,
@@ -20,42 +21,42 @@ const SideMenu = () => {
     });
 
     const handleResetFormData = () => {
+        // console.log("Reset");
         setFormData({
-        //   type: null,
-          food: null,
-          travel: null,
-          politics: null,
-          technology: null,
+            food: null,
+            travel: null,
+            politics: null,
+            technology: null,
         });
         setFood(true);
         setTravel(true);
         setPolitics(true);
         setTechnology(true);
-      };
+    };
 
-      useEffect(()=>{
-        let isAllValueNull = Object.values(formData).every((value)=> value === null);
+    useEffect(() => {
+        let isAllValueNull = Object.values(formData).every((value) => value === null);
         if (!isAllValueNull) {
             setIsFormNull(false);
-        }else{
+        } else {
             setIsFormNull(true);
         }
-      },[formData]);
+    }, [formData]);
 
-      console.log(isFormNull);
+    console.log(isFormNull);
 
     const isChange = (data) => {
         if (data === "Food") {
             if (food === true) {
                 console.log(" selected food");
-                setFormData((prevData)=>({
+                setFormData((prevData) => ({
                     ...prevData,
                     food: "Food",
                 }))
-            } 
-            else{
+            }
+            else {
                 console.log(" unselected food");
-                setFormData((prevData)=>({
+                setFormData((prevData) => ({
                     ...prevData,
                     food: null,
                 }))
@@ -65,14 +66,14 @@ const SideMenu = () => {
         if (data === "Travel") {
             if (travel === true) {
                 console.log(" selected Travel");
-                setFormData((prevData)=>({
+                setFormData((prevData) => ({
                     ...prevData,
                     travel: "Travel",
                 }))
             }
-            else{
+            else {
                 console.log(" unselected Travel");
-                setFormData((prevData)=>({
+                setFormData((prevData) => ({
                     ...prevData,
                     travel: null,
                 }))
@@ -82,14 +83,14 @@ const SideMenu = () => {
         if (data === "Politics") {
             if (politics === true) {
                 console.log(" selected Politics");
-                setFormData((prevData)=>({
+                setFormData((prevData) => ({
                     ...prevData,
                     politics: "Politics",
                 }))
             }
-            else{
+            else {
                 console.log(" unselected Politics");
-                setFormData((prevData)=>({
+                setFormData((prevData) => ({
                     ...prevData,
                     politics: null,
                 }))
@@ -99,62 +100,37 @@ const SideMenu = () => {
         if (data === "Technology") {
             if (technology === true) {
                 console.log(" selected Technology");
-                setFormData((prevData)=>({
+                setFormData((prevData) => ({
                     ...prevData,
                     technology: "Technology",
                 }))
             }
-            else{
+            else {
                 console.log(" unselected Technology");
-                setFormData((prevData)=>({
+                setFormData((prevData) => ({
                     ...prevData,
                     technology: null,
                 }))
             }
             setTechnology(!technology);
         }
-        // if (data === "Recent-Blogs") {
-        //     if (recentBlogs === true) {
-        //         console.log(" selected Recent-Blogs");
-        //         setFormData((prevData)=>({
-        //             ...prevData,
-        //             type: "Recent-Blogs",
-        //         }))
-        //     }
-        // }
-        // if (data === "Trending-Blogs") {
-        //     if (trendingBlogs === true) {
-        //         console.log(" selected Trending-Blogs");
-        //         setFormData((prevData)=>({
-        //             ...prevData,
-        //             type: "Trending-Blogs",
-        //         }))
-        //     }
-        // }
     }
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = (e) => {
         e.preventDefault();
-        // Object.entries(formData).forEach(([key, value])=>{
-        //     console.log(key + " " + value);
-        // })
-        console.log(formData);
-    }
+        dispatch(filterBlogs(formData));
+        window.scrollTo(0, 0); // scroll the window to the top
+    };
 
 
     return <div className="sideMenu">
+        <input type="checkbox" className="chevron-right-checkbox"/>
+        <i class="material-symbols-outlined chevron-right">
+            chevron_right
+        </i>
         <form method="get" className="sideMenu-form" onSubmit={handleSubmit}>
-            {/* <div className="container1">
-                <h3>Filters</h3>
-                <div className="container1-sub">
-                    <label htmlFor="Recent-blog">
-                        <input type="radio" name="toggle" id="Recent-blog" value={recentBlogs} onChange={() => isChange("Recent-Blogs")} />Recent blog</label>
-                    <label htmlFor="trending-blog">
-                        <input type="radio" name="toggle" id="trending-blog" value={trendingBlogs} onChange={() => isChange("Trending-Blogs")} />Trending blog</label>
-                </div>
-            </div> */}
             <div className="container2">
-                <h3>Categories</h3>
+                <h3 className="categories">Categories</h3>
                 <div className="container2-sub">
                     <label htmlFor="food">
                         <input type="checkbox" name="checkbox" id="category" value={food} onChange={() => isChange("Food")} />
@@ -174,8 +150,10 @@ const SideMenu = () => {
                     </label>
                 </div>
             </div>
-            <button type="submit" className="filter-submit-button" disabled={isFormNull}>Submit</button>
-            <button type="reset" className="filter-reset-button" disabled={isFormNull} onClick={handleResetFormData}>Reset</button>
+            <div className="sideMenu-buttons-container">
+                <button type="submit" className="filter-submit-button" disabled={isFormNull}>Submit</button>
+                <button type="reset" className="filter-reset-button" disabled={isFormNull} onClick={handleResetFormData}>Reset</button>
+            </div>
         </form>
     </div>
 }
