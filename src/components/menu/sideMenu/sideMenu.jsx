@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./sideMenu.css";
 
-function SideMenu(){
+const SideMenu = () =>{
 
     const [food, setFood] = useState(true);
     const [travel, setTravel] = useState(true);
@@ -9,7 +9,6 @@ function SideMenu(){
     const [technology, setTechnology] = useState(true);
 
     const isChange = (data) =>{
-        console.log("1 "+food);
         if(data === "Food"){
             if(food === true){
                 console.log("Food");
@@ -34,7 +33,6 @@ function SideMenu(){
             }
             setTechnology(!technology);
         }
-        console.log("2 "+food);
     }
 
     const changeValue = (e)=>{
@@ -43,7 +41,7 @@ function SideMenu(){
 
     return <div className="sideMenu">
         <div className="filter-form-container">
-            <form action="#" method="get"c lassName="sideMenu-form" >
+            <form action="#" method="get" className="sideMenu-form" >
                 <h3>Filters</h3>
                 <label htmlFor="Recent-blog">
                 <input type="radio" name="toggle" id="Recent-blog" value = "Recent-blog" onChange={changeValue}/>Recent blog</label>
