@@ -14,7 +14,7 @@ const Main = () => {
 
     useEffect(() => {
             dispatch(fetchBlogs());
-    }, [fetchBlog]);
+    }, []);
 
     useEffect(() => {
         setFetchBlog(state);
