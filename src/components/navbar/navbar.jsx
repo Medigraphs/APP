@@ -100,7 +100,7 @@ function Navbar() {
   return (
     <nav className={`navbar`}>
       <div className="container-1">
-        <h1 className="container-1-h1">Blog</h1>
+        <h1 className="container-1-h1">Stashify</h1>
       </div>
       <div className="container-2">
         <form className="container-2-span" method="GET">
