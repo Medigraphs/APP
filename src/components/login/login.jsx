@@ -15,7 +15,7 @@ export const Login = () => {
     const [password, setPassword] = useState("");
     const [loginButton, setLoginButton] = useState("Login");
     const [cookies, setCookie, removeCookie] = useCookies(['jwtInCookie']);
-
+    
     useEffect(() => {
         setjwt(state.data?.token);
         if (jwt) {
@@ -25,12 +25,12 @@ export const Login = () => {
             navigate('/profile');
         }
     }, [state, jwt]);
-
+    
     useEffect(() => {
         setjwt(null);
         console.log("after", jwt);
     }, [jwt]);
-
+    
     const handleLogin = async (event) => {
         event.preventDefault();
         setLoginButton("Logining...");
@@ -40,10 +40,28 @@ export const Login = () => {
         setEmail("");
         setPassword("");
     };
+    
+    // Conditional checking(Started)
+    const[getSuccess, setSuccess] = useState(false);
+    useEffect(() => {
+        if (state && state.data && !state.data.success) {
+          setSuccess(true);
+          setTimeout(() => {
+            setSuccess(false);
+          }, 5000);
+        }
+      }, [state]);
 
+      // Resetting the states
+    useEffect(() => {
+        setSuccess(false);
+    }, []);
+    // Conditional checking(Ended)
+    
     return (
         <div className="login-supreme-container">
             <div className="login-container">
+                {getSuccess && <p className="login-success-message">{state?.data?.message}</p>}
             <form className="login-form-container" onSubmit={handleLogin}>
                 <label htmlFor="email" className="login-email-label">Email
                     <input
@@ -52,6 +70,7 @@ export const Login = () => {
                         name="email"
                         onChange={(e) => setEmail(e.target.value)}
                         className="login-email-input"
+                        // onClick={()=>setSuccess(false)}
                     />
                 </label>
                 <label htmlFor="password" className="login-password-label">Password
@@ -61,6 +80,7 @@ export const Login = () => {
                         name="password"
                         onChange={(e) => setPassword(e.target.value)}
                         className="login-password-input"
+                        // onClick={()=>setSuccess(false)}
                     />
                 </label>
                 <button type="submit" disabled={loginButton === "wait..."} className="login-button">

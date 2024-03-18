@@ -33,9 +33,27 @@ export const ForgetPassword = () => {
         setEmail("");
     };
 
+     // Conditional checking(Started)
+     const [getSuccess, setSuccess] = useState(false);
+     useEffect(() => {
+         if (forget_password_state && forget_password_state.data && !forget_password_state.data.success) {
+                 setSuccess(true);
+                 setTimeout(() => {
+                     setSuccess(false);
+                 }, 5000);
+             }
+     }, [forget_password_state]);
+ 
+     // Resetting the states
+     useEffect(() => {
+         setSuccess(false);
+     }, []);
+     // Conditional checking(Ended)
+
     return (
         <div className="forgetPassword-supreme-container">
             <div className="forgetPassword-container">
+            {getSuccess && <p className="register-success-message">{forget_password_state?.data?.message}</p>}
                 <form className="forgetPassword-form-container" onSubmit={handleForgetPassword}>
                     <label htmlFor="email" className="forgetPassword-email-label">Email
                         <input

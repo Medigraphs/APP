@@ -1,13 +1,11 @@
-
-
-.login-supreme-container{
+.confirmRegistration-supreme-container{
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
-.login-container{
+.confirmRegistration-container{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,14 +17,14 @@
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 }
 
-.login-form-container{
+.confirmRegistration-form-container{
     display: flex;
     flex-direction: column;
     background-color: white;
     padding: 1rem;
 }
 
-.login-email-label, .login-password-label{
+.confirmRegistration-otp-label{
     display: flex;
     flex-direction: column;
     font-size: 1.3rem;
@@ -34,7 +32,7 @@
 
 }
 
-.login-email-input, .login-password-input{
+.confirmRegistration-otp-input{
     width: 25rem;
     height: 2rem;
     padding-left: 1rem;
@@ -44,11 +42,11 @@
     border: 1px solid black;
 }
 
-.login-email-input, .login-password-input:focus{
+.confirmRegistration-otp-input:focus{
     outline: none;
 }
 
-.login-button{
+.confirmRegistration-button{
     height: 2.5rem;
     border: 1px solid rgb(187, 187, 187);
     border-radius: 0.4rem;
@@ -58,161 +56,124 @@
     margin-bottom: 1rem;
 }
 
-.login-button:hover{
+.confirmRegistration-button:hover{
     background-color: rgb(70, 70, 70);
 }
 
-.register-link-para, .forgetPassword-link-para{
-    text-align: center;
-    font-size: 1rem;
-}
-
-.register-link-btn, .forgetPassword-link-btn{
-    color: black;
-}
-
-.register-link-btn:hover, .forgetPassword-link-btn{
-    color: rgb(46, 45, 45);
-}
-
-/* Conditional styling (Started)*/
-
-.login-success-message{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 300;
-    color: red;
-}
-
-/* Conditional styling (Ended)*/
-
 @media only screen and (max-width: 890px) {
-    .login-container{
+    .confirmRegistration-container{
         width: 40rem;
         height: 35rem;
     }
-    .login-email-input, .login-password-input{
+    .confirmRegistration-otp-input{
         width: 22.5rem;
         height: 1.8rem;
     }
-    .login-button{
+    .confirmRegistration-button{
         height: 2.3rem;
     }
 }
 
 @media only screen and (max-width: 768px) {
-    .login-container{
+    .confirmRegistration-container{
         width: 35rem;
-        height: 25rem;
+        height: 35rem;
     }
-    .login-form-container{
+    .confirmRegistration-form-container{
         padding: 0.8rem;
     }
-    .login-email-label, .login-password-label{
+    .confirmRegistration-otp-label{
         font-size: 1.2rem;
         margin-bottom: 0.8rem;
     }
-    .login-email-input, .login-password-input{
+    .confirmRegistration-otp-input{
         width: 20rem;
         height: 1.7rem;
         padding-left: 0.8rem;
         font-size: 0.8rem;
         margin-bottom: 0.8rem;
     }
-    .login-button{
+    .confirmRegistration-button{
         height: 2.2rem;
         font-size: 0.8rem;
         margin-bottom: 0.8rem;
     }
-    .register-link-para, .forgetPassword-link-para{
-        font-size: 0.8rem;
-    }
 }
 
 @media only screen and (max-width: 640px) {
-    .login-container{
+    .confirmRegistration-container{
         width: 30rem;
-        height: 23rem;
+        height: 30rem;
     }
-    .login-form-container{
+    .confirmRegistration-form-container{
         padding: 0.7rem;
     }
-    .login-email-label, .login-password-label{
+    .confirmRegistration-otp-label{
         font-size: 1.1rem;
         margin-bottom: 0.7rem;
     }
-    .login-email-input, .login-password-input{
-        width: 17rem;
+    .confirmRegistration-otp-input{
+        width: 20rem;
         height: 1.6rem;
         padding-left: 0.7rem;
         font-size: 0.7rem;
         margin-bottom: 0.7rem;
     }
-    .login-button{
+    .confirmRegistration-button{
         height: 2.1rem;
         font-size: 0.7rem;
         margin-bottom: 0.7rem;
     }
-    .register-link-para, .forgetPassword-link-para{
-        font-size: 0.7rem;
-    }
 }
 
 @media only screen and (max-width: 530px) {
-    .login-container{
+    .confirmRegistration-container{
         width: 25rem;
-        height: 22rem;
+        height: 28rem;
     }
-    .login-email-input, .login-password-input{
+    .confirmRegistration-otp-input{
         width: 15rem;
         height: 1.5rem;
         font-size: 0.65rem;
     }
-    .login-button{
+    .confirmRegistration-button{
         height: 2rem;
-    }
-    .register-link-para, .forgetPassword-link-para{
-        font-size: 0.65rem;
     }
 }
 
 @media only screen and (max-width: 425px) {
-    .login-container{
+    .confirmRegistration-container{
         width: 22rem;
     }
-    .login-email-input, .login-password-input{
+    .confirmRegistration-otp-input{
         width: 14rem;
         height: 1.5rem;
     }
-    .login-button{
+    .confirmRegistration-button{
         height: 2rem;
     }
 }
 
 @media only screen and (max-width: 375px) {
-    .login-container{
+    .confirmRegistration-container{
         width: 18rem;
-        height: 20rem;
+        height: 25rem;
     }
-    .login-email-label, .login-password-label{
+    .confirmRegistration-otp-label{
         font-size: 1rem;
     }
-    .login-email-input, .login-password-input{
+    .confirmRegistration-otp-input{
         width: 13rem;
         height: 1.4rem;
         font-size: 0.6rem;
     }
-    .login-button{
+    .confirmRegistration-button{
         height: 1.8rem;
     }
-    .register-link-para, .forgetPassword-link-para{
-        font-size: 0.6rem;
-    }
 }
-
+/* 
 @media only screen and (max-width: 320px) {
-    .login-container{
-        height: 18rem;
+    .register-container{
+        height: 25rem;
     }
-}
+} */

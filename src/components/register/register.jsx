@@ -3,11 +3,13 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import './register.css';
 import { useDispatch, useSelector } from "react-redux";
-import {register} from '../../store/registerSlice';
+import { register } from '../../store/registerSlice';
+import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
     const dispatch = useDispatch();
-    const state = useSelector((state)=> state.register);
+    const navigate = useNavigate();
+    const state = useSelector((state) => state.register);
     const [data, setData] = useState(null);
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -32,15 +34,52 @@ export const Register = () => {
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         setData(state);
-    },[state]);
+    }, [state]);
 
     console.log(data);
 
+    // Conditional checking(Started)
+    const [getSuccess, setSuccess] = useState(false);
+    const [isPasswordError, setPasswordError] = useState(false);
+    useEffect(() => {
+        if (state && state.data && !state.data.success) {
+            if(state?.data?.message?.includes("password")){
+                setPasswordError(true);
+                setTimeout(() => {
+                    setPasswordError(false);
+                }, 8000);
+            } else{
+                setSuccess(true);
+                setTimeout(() => {
+                    setSuccess(false);
+                }, 5000);
+            }
+        }
+    }, [state]);
+
+    useEffect(()=>{
+        if(state && state.data && state.data.success){
+            //Conditionally sending to other component(Started)
+            navigate('/confirmRegistration');
+            //Conditionally sending to other component(Started)
+        }   
+    },[state]);
+
+    // Resetting the states
+    useEffect(() => {
+        setSuccess(false);
+        setPasswordError(false);
+    }, []);
+    // Conditional checking(Ended)
+
+
     return (
         <div className="register-supreme-container">
-            <div className="register-container">
+            <div className={`register-container${isPasswordError ? ' error' : ''}`}>
+            {isPasswordError && <p className="registerPasswordError-message">Password should have:<br />Minimum 8 characters<br />At least 1 uppercase alphabet <br />At least 1 lowercase alphabet<br />At least 1 number<br />At least 1 special character (!@#$%^&*)</p>}
+                {getSuccess && <p className="register-success-message">{state?.data?.message}</p>}
                 <form className="register-form-container" onSubmit={handleRegister}>
                     <label htmlFor="username" className="register-username-label">Username
                         <input

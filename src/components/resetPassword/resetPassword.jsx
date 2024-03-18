@@ -3,11 +3,13 @@ import { useState } from "react";
 import './resetPassword.css';
 import { resetPassword } from "../../store/resetPasswordSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 export const ResetPassword = () => {
     const dispatch = useDispatch();
-    const reset_password_state = useSelector((state)=> state.resetPassword);
+    const navigate = useNavigate();
+    const reset_password_state = useSelector((state) => state.resetPassword);
     const [resetPasswordState, setResetPasswordState] = useState(reset_password_state);
     const [otp, setOTP] = useState("");
     const [password, setPassword] = useState("");
@@ -15,9 +17,9 @@ export const ResetPassword = () => {
     const [ResetPasswordButton, setResetPasswordButton] = useState("Reset");
     const [canSubmit, setCanSubmit] = useState(false);
 
-    useEffect(()=>{
+    useEffect(() => {
         setResetPasswordState(reset_password_state);
-    },[resetPasswordState])
+    }, [resetPasswordState])
 
     console.log(resetPasswordState?.data);
 
@@ -27,7 +29,7 @@ export const ResetPassword = () => {
             setCanSubmit(true);
             if (canSubmit) {
                 setResetPasswordButton("Resetting...");
-                await dispatch(resetPassword({otp, password, confirmPassword} ));
+                await dispatch(resetPassword({ otp, password, confirmPassword }));
                 setResetPasswordButton("Reset");
                 setOTP("");
                 setPassword("");
@@ -36,9 +38,40 @@ export const ResetPassword = () => {
         }
     }
 
+    // Conditional checking(Started)
+    const [getSuccess, setSuccess] = useState(false);
+    const [successPositive, setSuccessPositive] = useState(false);
+    useEffect(() => {
+        if (reset_password_state && reset_password_state.data && !reset_password_state.data.success) {
+            setSuccess(true);
+            setTimeout(() => {
+                setSuccess(false);
+            }, 5000);
+        }
+    }, [reset_password_state]);
+
+    useEffect(() => {
+        if (reset_password_state && reset_password_state.data && reset_password_state.data.success) {
+            setSuccessPositive(true);
+            setTimeout(() => {
+                setSuccessPositive(false);
+                navigate('/');
+            }, 2000);
+        }
+    }, [reset_password_state]);
+
+    // Resetting the states
+    useEffect(() => {
+        setSuccess(false);
+        setSuccessPositive(false);
+    }, []);
+    // Conditional checking(Ended)
+
     return (
         <div className="resetPassword-supreme-container">
             <div className="resetPassword-container">
+                {successPositive && <p className="register-success-message">{reset_password_state?.data?.message}</p>}
+                {getSuccess && <p className="register-success-message">{reset_password_state?.data?.message}</p>}
                 <form className="resetPassword-form-container" onSubmit={handleResetPassword}>
                     <label htmlFor="otp" className="resetPassword-otp-label">OTP
                         <input

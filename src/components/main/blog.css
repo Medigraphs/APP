@@ -94,6 +94,33 @@
     font-weight: 500;
 }
 
+
+/* Run when data not found (Started)*/
+
+.not-found-supreme-container{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.not-found-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.not-found-h1{
+    font-weight: 300;
+}
+
+.not-found-para{
+    font-weight: 300;
+}
+
+/* Run when data not found (Ended)*/
+
 @media only screen and (max-width: 1232px) {
     .main {
         grid-template-columns: auto auto auto;
@@ -142,5 +169,12 @@
     .blog-index-para {
         font-size: 1.1rem;
         font-weight: 500;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .not-found-h1{
+        font-weight: 300;
+        font-size: 1.8rem;
     }
 }

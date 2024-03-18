@@ -36,8 +36,8 @@ const Main = () => {
         }
     }, [fetchBlogs, filterFetchBlogs]);
 
-    // console.log("fetchBlogs", fetchBlog);
-    // console.log("filter records ", filterFetchBlogs);
+    // console.log("fetchBlogs", fetchBlog?.data?.success);
+    // console.log("filter records ", filterFetchBlogs.data?.success);
 
 
     //Pagination(Start)
@@ -85,12 +85,25 @@ const Main = () => {
         setCurrentPage(currentPage + 1);
     }
     //Handling corner cases for buttons(Ended)
+
     //Pagination(End)
 
-
+    // Loading effect(Started)
     if (fetchBlog?.isLoading || filterFetchBlogs?.isLoading) {
         return <Loader />
     }
+    // Loading effect(Ended)
+
+    // Conditionally data not found(Started)
+    if ((!fetchBlog?.data?.success || !filterFetchBlogs?.data?.success) && !records) {
+        return <div className="not-found-supreme-container">
+            <div className="not-found-container">
+                <h1 className="not-found-h1">Oops, blogs not found !</h1>
+                <p className="not-found-para">please try again ...</p>
+            </div>
+        </div>;
+    } 
+    // Conditionally data not found(Ended)
 
     return <div className={`container`}>
         <SideMenu />

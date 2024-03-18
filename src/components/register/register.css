@@ -73,6 +73,31 @@
     color: rgb(46, 45, 45);
 }
 
+/* Conditional styling (Started)*/
+
+.register-success-message{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 300;
+    color: red;
+}
+
+.registerPasswordError-message{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 300;
+    color: red;
+}
+
+.register-container.error {
+    height: 42rem;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Conditional styling (Ended)*/
+
 @media only screen and (max-width: 890px) {
     .register-container{
         width: 40rem;
@@ -114,6 +139,10 @@
     .login-link-para{
         font-size: 0.8rem;
     }
+    .register-container.error {
+        height: 37rem;
+        transition: all 0.3s ease-in-out;
+    }
 }
 
 @media only screen and (max-width: 640px) {
@@ -143,6 +172,10 @@
     .login-link-para{
         font-size: 0.7rem;
     }
+    .register-container.error {
+        height: 35rem;
+        transition: all 0.3s ease-in-out;
+    }
 }
 
 @media only screen and (max-width: 530px) {
@@ -161,6 +194,10 @@
     .login-link-para{
         font-size: 0.65rem;
     }
+    .registerPasswordError-message{
+        font-weight: 300;
+        font-size: small;
+    }
 }
 
 @media only screen and (max-width: 425px) {
@@ -173,6 +210,10 @@
     }
     .register-button{
         height: 2rem;
+    }
+    .register-container.error {
+        height: 32rem;
+        transition: all 0.3s ease-in-out;
     }
 }
 
@@ -195,6 +236,11 @@
     .login-link-para{
         font-size: 0.6rem;
     }
+    .register-container.error {
+        height: 32rem;
+        transition: all 0.3s ease-in-out;
+    }
+    
 }
 /* 
 @media only screen and (max-width: 320px) {
