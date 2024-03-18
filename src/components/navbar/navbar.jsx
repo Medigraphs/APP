@@ -30,8 +30,41 @@ function Navbar() {
 
   //Functioning for Logout(Ended)
 
+  //Functioning for sticky navbar(Starting)
+  const [isSticky, setSticky] = useState(false);
+
+  const handleScroll = () =>{
+    window.requestAnimationFrame(()=>{
+      if(window.scrollY > 0){
+        setSticky(true);
+      } else{
+        setSticky(false);
+      }
+    })
+  };
+
+  useEffect(()=>{
+    window.addEventListener('scroll', handleScroll);
+
+    return () =>{
+      window.removeEventListener('scroll', handleScroll);
+    };
+  },[]);
+
+  //Functioning for sticky navbar(Ended)
+
+  const [isMenuOpen, setMenuOpen] = useState(false);
+
+  const handleMenuToggle = () =>{
+    setMenuOpen(!isMenuOpen);
+  }
+
+  const handleClickLink = () =>{
+    setMenuOpen(false);
+  }
+
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${isSticky ? "sticky" : ""}`}>
       <div className="container-1">
         <h1 className="container-1-h1">Blog</h1>
       </div>
@@ -52,31 +85,34 @@ function Navbar() {
         </form>
       </div>
       <div className="container-button">
-        <input type="checkbox" className="check-box" name="check" id="check" />
+        <input type="checkbox" className="check-box" name="check" id="check" checked={isMenuOpen} onChange={handleMenuToggle}/>
         <button className="menu-button material-symbols-outlined">menu</button>
         <button className="close-button material-symbols-outlined">close</button>
         <div className="container-3" >
-          <Link className="link" to={`/`} >
+          <div className="container-3-navbar">
+          <Link className="link" to={`/`} onClick={handleClickLink}>
             Home
           </Link>
-          <Link className="link" to={`/contact-us`}>
+          <Link className="link" to={`/contact-us`} onClick={handleClickLink}>
             Contact us
           </Link>
           {!isAuthenticated && (
-            <Link className="link" to={`/login`}>
+            <Link className="link" to={`/login`} onClick={handleClickLink}>
               Login
             </Link>
           )}
           {isAuthenticated && (
             <>
-              <Link className="link" to={`/profile`}>
+              <Link className="link" to={`/profile`} onClick={handleClickLink}>
                 Profile
               </Link>
+
               <Link className="link" onClick={handleLogout}>
-                Logout
+                <span onClick={handleClickLink}>Logout</span>
               </Link>
             </>
           )}
+          </div>
         </div>
       </div>
     </nav>
