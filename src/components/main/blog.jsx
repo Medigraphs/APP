@@ -118,7 +118,7 @@ const Main = () => {
                         <h6>{data.createdAt.slice(0, 10)}</h6>
                     </div>
                     <p className="blog-description">{data.description.slice(0, 150)} ...</p>
-                    <Link className="blog-link" to={`/blogDetail/${data._id}`}>
+                    <Link className="blog-link" to={`/blogDetail/${encodeURIComponent(data?.title)}`}>
                         Read more
                     </Link>
                 </div>

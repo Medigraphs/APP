@@ -8,18 +8,20 @@ import Loader from "../loading/loader";
 
 const BlogDetail = () => {
     const dispatch = useDispatch();
-    const { _id } = useParams();
+    const { title } = useParams();
+    console.log(title);
     const state = useSelector((state)=> state.singleBlog);
 
     useEffect(() => {
-        dispatch(fetchSingleBlog(_id));
-    }, [_id, dispatch]);
+        dispatch(fetchSingleBlog(title));
+    }, [title, dispatch]);
+    console.log(state.data);
 
     if (state.isLoading) {
         return <Loader />
     }
 
-    const showSecondImage = state.data?.article.articleImage.length  < 1;   
+    const showSecondImage = state.data?.article?.articleImage?.length  < 1;   
 
     return (
         <div className="main-container-blogDetail">
@@ -34,5 +36,4 @@ const BlogDetail = () => {
         </div>
     );
 };
-
 export default BlogDetail;

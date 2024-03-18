@@ -22,7 +22,7 @@ function App() {
           <Navbar />
             <Routes>
               <Route exact path='/' element={<Main />} />
-              <Route path='/blogDetail/:_id' element={<BlogDetail />} />
+              <Route path='/blogDetail/:title' element={<BlogDetail />} />
               <Route path='/contact-us' element={<ContactUs/>}/>
               <Route path='/profile' element={<Profile />} />
               <Route path='/login' element={<Login/>}/>
