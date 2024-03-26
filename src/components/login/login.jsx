@@ -15,12 +15,12 @@ export const Login = () => {
     const [password, setPassword] = useState("");
     const [loginButton, setLoginButton] = useState("Login");
     const [cookies, setCookie, removeCookie] = useCookies(['jwtInCookie']);
-    
+
     useEffect(() => {
         setjwt(state.data?.user?.accessToken);
         if (jwt) {
             setCookie('jwtInCookie', jwt, {
-                expires: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+                expires: new Date(Date.now() + 1 * 60 * 60 * 1000),
             });
             navigate('/profile');
         }
