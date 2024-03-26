@@ -17,7 +17,7 @@ export const Login = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['jwtInCookie']);
     
     useEffect(() => {
-        setjwt(state.data?.token);
+        setjwt(state.data?.user?.accessToken);
         if (jwt) {
             setCookie('jwtInCookie', jwt, {
                 expires: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),

@@ -1,15 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {auth} from './firebase'
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export const login = createAsyncThunk("login", async ({ email, password }) => {
-    let response = await fetch("https://blog-zo8s.vercel.app/app/v1/signin", {
-        method: 'POST',
-        // mode: 'no-cors', //Disable the cors(Cross-Origin resource sharing)
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-    })
-    return response.json();
+    let res =undefined;
+    try {
+        res = await signInWithEmailAndPassword(auth, email, password);
+        return res;
+    } catch(e) {
+        console.log(e);
+        return e;
+    }
 })
 
 const loginSlice = createSlice({
