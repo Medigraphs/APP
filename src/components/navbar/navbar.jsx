@@ -100,20 +100,7 @@ function Navbar() {
   return (
     <nav className={`navbar`}>
       <div className="container-1">
-        <h1 className="container-1-h1">Stashify</h1>
-      </div>
-      <div className="container-2">
-        <form className="container-2-span" method="GET">
-          <input
-            type="search"
-            className="container-2-search-box"
-            id="container-2-search-box"
-            placeholder="Search"
-            onChange={(e) => {
-              handleSearchBlogs(e.target.value || null);
-            }}
-          />
-        </form>
+        <h1 className="container-1-h1">MediGraphs</h1>
       </div>
       <div className="container-button">
         <input type="checkbox" className="check-box" name="check" id="check" checked={isMenuOpen} onChange={handleMenuToggle} />
