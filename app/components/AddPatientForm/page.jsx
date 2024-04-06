@@ -1,63 +1,40 @@
 import { useState, useEffect } from 'react';
-import Select from 'react-select';
 import styles from './page.module.css';
+import { db } from '@/app/firebase/firebase';
+import { doc, setDoc } from 'firebase/firestore';
 
-const AddPatientForm = () => {
+const AddPatientForm = ({setUpdateList}) => {
   const [name, setName] = useState('');
   const [id, setId] = useState('');
-  const [mobileNo, setMobileNo] = useState('');
-  const [recordings, setRecordings] = useState([]);
+  const [mobile, setMobile] = useState('');
   const [address, setAddress] = useState('');
   const [date, setDate] = useState('');
-  const [time, setTime] = useState(getCurrentTime()); // Set initial time to the current time
   const [doctorName, setDoctorName] = useState('');
+  const [isPatientAdding, setPatientAddStatus] = useState(false);
 
-  // Function to get the current time in HH:mm format
-  function getCurrentTime() {
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    return `${hours}:${minutes}`;
-  }
-
-  useEffect(() => {
-    // Update the time field to the current time every minute
-    const intervalId = setInterval(() => {
-      setTime(getCurrentTime());
-    }, 60000);
-
-    // Clear the interval when the component is unmounted
-    return () => clearInterval(intervalId);
-  }, []);
-
-  const handleAddPatient = () => {
-    // Implement your logic to add patient information
-    console.log('Adding patient:', {
+  const handleAddPatient = async () => {
+    setPatientAddStatus(true);
+    setDoc(doc(db, 'patients', id), {
       name,
-      id,
-      recordings,
+      mobile,
       address,
       date,
-      time,
       doctorName,
-      mobileNo
-    });
+    }).finally(() => {
+      setPatientAddStatus(false);
+      setUpdateList(prev => !prev);
+      alert("Patient Added!");
+    })
+    // console.log('Patient added with ID: ', patientRef.id);
+    // Implement your logic to add patient information
     // Reset form fields after adding patient
     setName('');
     setId('');
-    setRecordings([]);
     setAddress('');
     setDate('');
     setDoctorName('');
-    setMobileNo('');
+    setMobile('');
   };
-
-  const recordingOptions = [
-    { value: 'EEG', label: 'EEG' },
-    { value: 'ECG', label: 'ECG' },
-    { value: 'EOG', label: 'EOG' },
-    { value: 'EMG', label: 'EMG' },
-  ];
 
   return (
     <div className={styles.formContainer}>
@@ -70,14 +47,7 @@ const AddPatientForm = () => {
         <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
 
         <label>Mobile No:</label>
-        <input type="number" value={mobileNo} onChange={(e) => setMobileNo(e.target.value)} />
-
-        <label>Recording List:</label>
-        <Select
-          options={recordingOptions}
-          value={recordings}
-          onChange={(selectedOptions) => setRecordings(selectedOptions)}
-        />
+        <input type="number" value={mobile} onChange={(e) => setMobile(e.target.value)} />
 
         <label>Address:</label>
         <textarea value={address} onChange={(e) => setAddress(e.target.value)} />
@@ -85,14 +55,11 @@ const AddPatientForm = () => {
         <label>Date:</label>
         <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
 
-        <label>Time:</label>
-        <input type="time" value={time} onChange={(e) => setTime(e.target.value)} />
-
         <label>Doctor's Name:</label>
         <input type="text" value={doctorName} onChange={(e) => setDoctorName(e.target.value)} />
 
-        <button type="button" onClick={handleAddPatient}>
-          Add Patient
+        <button type="button" onClick={handleAddPatient} disabled={isPatientAdding}>
+          {isPatientAdding ? "Adding Patient" : "Add Patient"}
         </button>
       </form>
     </div>

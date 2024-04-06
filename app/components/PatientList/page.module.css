@@ -1,0 +1,37 @@
+
+.patientListContainer {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .patientList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .patientItem {
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .patientItem:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .patientName {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .patientId {
+    font-size: 12px;
+    color: #555;
+  }
+  

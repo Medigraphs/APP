@@ -1,10 +1,11 @@
+"use client";
 import { useEffect, useState } from 'react';
 import {useCreateUserWithEmailAndPassword} from 'react-firebase-hooks/auth'
 import {auth} from '@/app/firebase/firebase';
 import { useRouter } from 'next/navigation';
 import styles  from './page.module.css';
 
-const SignUp = () => {
+const SignUp = ({toggle}) => {
   const [email, setEmail] = useState('');
   const router = useRouter();
   const [password, setPassword] = useState('');
@@ -19,12 +20,12 @@ const SignUp = () => {
 
     if (registeredUser && registeredUser?.user?.uid !== "") {
       alert("User registered successfully.");
-      router.push('/');
+      toggle();
     }
   }, [loading, registeredUser, creationError])
 
   const onToggle = () => {
-    router.push('/')
+    toggle();
   }
   const handleSignUp = async () => {
     try {

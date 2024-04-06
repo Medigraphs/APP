@@ -1,18 +1,21 @@
+'use client';
 import { useEffect, useState } from 'react';
 import {useSignInWithEmailAndPassword} from 'react-firebase-hooks/auth'
 import {auth} from '@/app/firebase/firebase'
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css'
+import SignUp from '../sign-up/page';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
   const [error, setError] = useState('');
   const [signInWithEmailAndPassword, loggedInUser, loading, loginError] = useSignInWithEmailAndPassword(auth);
-  const router = useRouter();
+  const [showSignUp, setSignUp] = useState(false);
 
   const onToggle = () => {
-    router.push('/sign-up');
+    setSignUp(prev => !prev);
   }
 
   useEffect(() => {
@@ -36,13 +39,17 @@ const SignIn = () => {
         signInWithEmailAndPassword(email, password);
         // setEmail('');
         // setPassword('');
-        // router.push('/')
+        router.push('/')
     }catch(e){
         console.error(e)
     }
   };
 
   return (
+    <>
+    {
+      showSignUp ? 
+      <SignUp toggle={onToggle}/>: 
     <div className={styles.formContainer}>
       <h2>Sign In</h2>
       <form>
@@ -52,8 +59,8 @@ const SignIn = () => {
         <label>Password:</label>
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         {error && <p className={styles.error}>{error}</p>}
-        <button type="button" onClick={handleSignIn}>
-          Sign In
+        <button type="button" onClick={handleSignIn} disabled={loading}>
+          {loading ? "LoggingIn..." : "Sign In"}
         </button>
       </form>
       <p>
@@ -63,6 +70,8 @@ const SignIn = () => {
         </span>
       </p>
     </div>
+    }
+    </>
   );
 };
 

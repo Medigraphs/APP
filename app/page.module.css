@@ -1,3 +1,11 @@
 .container {
   text-align: center;
 }
+
+.main {
+  position: absolute;
+  top: 10%;
+  display: flex;
+  justify-content: center;
+  gap: 5%;
+}
