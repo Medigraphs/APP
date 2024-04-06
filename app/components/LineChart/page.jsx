@@ -66,7 +66,6 @@ export const Graph = () => {
                                 break;
                             }
                             // Assuming value contains the data received from the serial port
-                            console.log(value)
                             handleSerialData(value);
 
                         }
@@ -74,6 +73,7 @@ export const Graph = () => {
                         console.log(error)
                     } finally {
                         reader.releaseLock();
+                        await port.close();
                     }
                 }
             } catch (error) {
