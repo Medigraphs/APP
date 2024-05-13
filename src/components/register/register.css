@@ -24,7 +24,7 @@
     padding: 1rem;
 }
 
-.register-username-label, .register-email-label, .register-password-label, .register-confirm-password-label{
+.register-name-label, .register-email-label, .register-password-label, .register-confirm-password-label{
     display: flex;
     flex-direction: column;
     font-size: 1.3rem;
@@ -32,7 +32,7 @@
 
 }
 
-.register-username-input, .register-email-input, .register-password-input, .register-confirm-password-input{
+.register-name-input, .register-email-input, .register-password-input, .register-confirm-password-input{
     width: 25rem;
     height: 2rem;
     padding-left: 1rem;
@@ -42,7 +42,7 @@
     border: 1px solid black;
 }
 
-.register-username-input, .register-email-input, .register-password-input, .register-confirm-password-input:focus{
+.register-name-input, .register-email-input, .register-password-input, .register-confirm-password-input:focus{
     outline: none;
 }
 
@@ -103,7 +103,7 @@
         width: 40rem;
         height: 35rem;
     }
-    .register-username-input, .register-email-input, .register-password-input, .register-confirm-password-input{
+    .register-name-input, .register-email-input, .register-password-input, .register-confirm-password-input{
         width: 22.5rem;
         height: 1.8rem;
     }
@@ -120,11 +120,11 @@
     .register-form-container{
         padding: 0.8rem;
     }
-    .register-username-label, .register-email-label, .register-password-label, .register-confirm-password-label{
+    .register-name-label, .register-email-label, .register-password-label, .register-confirm-password-label{
         font-size: 1.2rem;
         margin-bottom: 0.8rem;
     }
-    .register-username-input, .register-email-input, .register-password-input, .register-confirm-password-input{
+    .register-name-input, .register-email-input, .register-password-input, .register-confirm-password-input{
         width: 20rem;
         height: 1.7rem;
         padding-left: 0.8rem;
@@ -153,11 +153,11 @@
     .register-form-container{
         padding: 0.7rem;
     }
-    .register-username-label, .register-email-label, .register-password-label, .register-confirm-password-label{
+    .register-name-label, .register-email-label, .register-password-label, .register-confirm-password-label{
         font-size: 1.1rem;
         margin-bottom: 0.7rem;
     }
-    .register-username-input, .register-email-input, .register-password-input, .register-confirm-password-input{
+    .register-name-input, .register-email-input, .register-password-input, .register-confirm-password-input{
         width: 17rem;
         height: 1.6rem;
         padding-left: 0.7rem;
@@ -183,7 +183,7 @@
         width: 25rem;
         height: 28rem;
     }
-    .register-username-input, .register-email-input, .register-password-input, .register-confirm-password-input{
+    .register-name-input, .register-email-input, .register-password-input, .register-confirm-password-input{
         width: 15rem;
         height: 1.5rem;
         font-size: 0.65rem;
@@ -204,7 +204,7 @@
     .register-container{
         width: 22rem;
     }
-    .register-username-input, .register-email-input, .register-password-input, .register-confirm-password-input{
+    .register-name-input, .register-email-input, .register-password-input, .register-confirm-password-input{
         width: 14rem;
         height: 1.5rem;
     }
@@ -222,10 +222,10 @@
         width: 18rem;
         height: 25rem;
     }
-    .register-username-label, .register-email-label, .register-password-label, .register-confirm-password-label{
+    .register-name-label, .register-email-label, .register-password-label, .register-confirm-password-label{
         font-size: 1rem;
     }
-    .register-username-input, .register-email-input, .register-password-input, .register-confirm-password-input{
+    .register-name-input, .register-email-input, .register-password-input, .register-confirm-password-input{
         width: 13rem;
         height: 1.4rem;
         font-size: 0.6rem;

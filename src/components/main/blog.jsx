@@ -98,8 +98,7 @@ const Main = () => {
     if ((!fetchBlog?.data?.success || !filterFetchBlogs?.data?.success) && !records) {
         return <div className="not-found-supreme-container">
             <div className="not-found-container">
-                <h1 className="not-found-h1">Oops, blogs not found !</h1>
-                <p className="not-found-para">please try again ...</p>
+                <h1 className="not-found-h1">Welcome to MediGraphs</h1>
             </div>
         </div>;
     } 

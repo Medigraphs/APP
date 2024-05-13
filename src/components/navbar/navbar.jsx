@@ -23,6 +23,7 @@ function Navbar() {
   const handleLogout = async () => {
     await dispatch(logout(cookies.jwtInCookie));
     removeCookie('jwtInCookie', { path: '/' });
+    localStorage.removeItem("user");
     setIsAuthenticated(false);
     navigate('/');
   };
@@ -125,9 +126,9 @@ function Navbar() {
                   Profile
                 </Link>
 
-                <Link className="link" onClick={handleLogout}>
-                  <span onClick={handleClickLink}>Logout</span>
-                </Link>
+                <button className="link" onClick={handleLogout}>
+                  Logout
+                </button>
               </>
             )}
           </div>
