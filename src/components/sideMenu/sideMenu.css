@@ -68,6 +68,44 @@
 }
 
 
+.patientListContainer {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.patientList {
+    list-style: none;
+    padding: 0;
+}
+
+.patientItem {
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.patientItem:hover {
+    background-color: #e0e0e0;
+}
+
+.patientName {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.patientId {
+    font-size: 12px;
+    color: #555;
+}
+
+
+
 @media only screen and (max-width: 768px) {
 
     /* conditionally opening and closing the side menu (Started) */
@@ -79,24 +117,25 @@
         opacity: 0;
         margin-left: 2rem;
     }
-    
+
     .chevron-right-checkbox:checked~.chevron-right {
         transform: scale(2.5) rotateZ(90deg);
         transition: all 0.3s ease-in-out;
     }
-    
+
     .chevron-right-checkbox:checked~.sideMenu-form {
         display: flex;
     }
-    
+
     .chevron-right-checkbox:checked~.sideMenu {
         display: flex;
     }
-    
+
     .chevron-right {
         margin-left: 2rem;
         transform: scale(2);
     }
+
     /* conditionally opening and closing the side menu (Ended) */
 
     .sideMenu {

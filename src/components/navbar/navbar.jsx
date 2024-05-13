@@ -6,9 +6,6 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../store/logoutSlice";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { filterBlogs } from "../../store/filterBlogsSlice";
-import { fetchBlogs } from "../../store/blogsSlice";
-import { debounce } from "lodash";
 
 function Navbar() {
 
@@ -85,16 +82,6 @@ function Navbar() {
   //styling navbar link animation(Ended)
 
   //search bar functionality(Started)
-
-  const handleSearchBlogs = debounce(async (title) => {
-    if(title === null){
-      await dispatch(fetchBlogs());
-      window.scrollTo(0, 0);
-      return;
-    }
-    await dispatch(filterBlogs(title));
-    window.scrollTo(0, 0);
-  }, 1000);
 
   //search bar functionality(Ended)
 
