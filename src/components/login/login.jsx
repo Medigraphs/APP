@@ -17,15 +17,15 @@ export const Login = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['jwtInCookie']);
 
     useEffect(() => {
-        setjwt(state.data?.user?.accessToken);
+        setjwt(state.data?.accessToken);
         console.log(state.data)
         if (jwt) {
             setCookie('jwtInCookie', jwt, {
                 expires: new Date(Date.now() + 1 * 60 * 60 * 1000),
             });
             localStorage.setItem("user", JSON.stringify({
-                displayName: state.data.user.displayName,
-                email: state.data.user.email,
+                displayName: state.data.displayName,
+                email: state.data.email,
             }));
             navigate('/profile');
         }

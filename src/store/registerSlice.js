@@ -1,14 +1,26 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updatePhoneNumber, updateProfile } from "firebase/auth";
 import { auth } from "./firebase";
 
-export const register = createAsyncThunk("register", async ({ email, password, name }) => {
+export const register = createAsyncThunk("register", async ({ email, password, name, phoneNumber, photoURL = undefined }) => {
     let res = undefined;
     try {
         res = await createUserWithEmailAndPassword(auth, email, password);
         // Update user profile with name
-        await updateProfile(res.user, { displayName: name });
-        return res;
+        await updateProfile(res.user, {
+            displayName: name,
+            photoURL: photoURL
+        });
+        // WIP
+        // await updatePhoneNumber(res.user, {
+        //     phoneNumber: phoneNumber
+        // });
+        return {
+            displayName: res.user.displayName,
+            email: res.user.email,
+            photoURL: res.user.photoURL,
+            phoneNumber: res.user.phoneNumber
+        };
     } catch(e) {
         console.log(e);
         return e;

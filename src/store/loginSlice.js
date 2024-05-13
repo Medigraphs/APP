@@ -6,7 +6,15 @@ export const login = createAsyncThunk("login", async ({ email, password }) => {
     let res =undefined;
     try {
         res = await signInWithEmailAndPassword(auth, email, password);
-        return res;
+        console.log(res.user);
+        return {
+            accessToken: res.user.accessToken,
+            displayName: res.user.displayName,
+            email: res.user.email,
+            photoURL: res.user.photoURL,
+            phoneNumber: res.user.phoneNumber,
+            uid: res.user.uid
+        };
     } catch(e) {
         console.log(e);
         return e;

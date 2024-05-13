@@ -1,19 +1,21 @@
 import React, { useEffect, useState, useRef } from "react";
 import styles from './adminPanel.module.css';
 import { doc, setDoc } from 'firebase/firestore';
-import { db } from "../../store/firebase";
+import { db, hosptialId } from "../../store/firebase";
 import { useCookies } from "react-cookie";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import { Outlet } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
+import { register } from '../../store/registerSlice';
 
 export const AdminPanel = () => {
 
     const [isPatientAdding, setPatientAddStatus] = useState(false);
     const resetButtonRef = useRef(null);
     const [cookies] = useCookies(['jwtInCookie']);
-    const [isAdmin, setAdmin] = useState(false);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const state = useSelector((state) => state.register);
 
     const handleAddPatient = async (event) => {
         console.log(event)
@@ -30,6 +32,10 @@ export const AdminPanel = () => {
             address,
             date,
             doctorName,
+        }).then(() => {
+            let email = name.replace(/\s+/, "") + id.toString() + "@" + hosptialId;
+            let password = id.toString() + mobile.toString();
+            dispatch(register({ email, password, name, mobile }));
         }).finally(() => {
             alert("Patient Added!");
             setPatientAddStatus(false);
@@ -42,10 +48,8 @@ export const AdminPanel = () => {
     useEffect(() => {
         if (cookies.jwtInCookie) {
             let token = jwtDecode(cookies.jwtInCookie);
-            if (token?.email?.substring(0, 5) === 'admin') {
-                setAdmin(true);
-            } else {
-                navigate('/login');
+            if (token?.email?.substring(0, 5) !== 'admin') {
+                navigate('/profile');
             }
         } else {
             navigate('/login');
@@ -56,6 +60,10 @@ export const AdminPanel = () => {
         const today = new Date();
         setCurrentDate(today.toISOString().substr(0, 10));
     }, [])
+
+    useEffect(() => {
+        console.log("Add Patient", state);
+    }, [state])
     return (
         < div className={styles.root}>
             <div className={styles.subRoot}>
@@ -79,7 +87,7 @@ export const AdminPanel = () => {
 
                         <label>Doctor's Name:</label>
                         <input type="text" name="doctorName" id="doctorName" placeholder="Ex. Faraz, etc." />
-                        <button type="submit">{isPatientAdding ? "Adding Patient" : "Add Patient"}</button>
+                        <button type="submit" disabled={isPatientAdding}>{isPatientAdding ? "Adding Patient" : "Add Patient"}</button>
                         <button type="reset" ref={resetButtonRef}>Reset</button>
                     </form>
                 </div>
