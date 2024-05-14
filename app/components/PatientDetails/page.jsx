@@ -29,16 +29,13 @@ const PatientDetails = ({ selectedPatient }) => {
     { value: "EMG", label: "EMG" },
   ];
 
-  const fetchDataFromFirestore = async () => {
-    const recordingsCollectionRef = collection(db, 'patients');
-    const querySnapshot = await getDocs(recordingsCollectionRef);
-    const fetchedData = [];
-    querySnapshot.docs.filter(data => data.id == selectedPatient.id).map(data => data.data().recordings).forEach((doc) => {
-      fetchedData.push(doc);
-      console.log(doc)
-    });
-    setFetchedRecordings(fetchedData);
-  };
+  // const fetchDataFromFirestore = async () => {
+  //   const recordingsCollectionRef = collection(db, 'patients');
+  //   const querySnapshot = await getDocs(recordingsCollectionRef);
+  //   querySnapshot.docs.filter(data => data.id == selectedPatient.id).map(data => data.data().recordings).forEach((doc) => {
+  //     setFetchedRecordings(prev => [...prev, doc]);
+  //   });
+  // };
 
   // useEffect(() => {
   //   fetchDataFromFirestore();
@@ -60,6 +57,10 @@ const PatientDetails = ({ selectedPatient }) => {
     })
   }
 
+  // useEffect(()=>{
+  //   console.log("Recordings: ",fetchedRecordings);
+  // },[fetchedRecordings])
+
   // Function to get the current time in HH:mm format
   function getCurrentTime() {
     const now = new Date();
@@ -79,11 +80,10 @@ const PatientDetails = ({ selectedPatient }) => {
   }, []);
 
   useEffect(() => {
-    console.log(serialData);
-  }, [isFinished]);
+  }, [isFinished, serialData]);
 
   const showRecordings = () => {
-    fetchDataFromFirestore();
+    setFetchedRecordings(prev => [...prev,selectedPatient.recordings]);
     setRecordingsDialog(true);
   }
 
@@ -148,7 +148,7 @@ const PatientDetails = ({ selectedPatient }) => {
           <div>
             <p>Name: {selectedPatient.name}</p>
             <p>ID: {selectedPatient.id}</p>
-            <p>Recordings: {selectedPatient?.recordings?.join(", ")}</p>
+            {/* <p>Recordings: {selectedPatient?.recordings?.join(", ")}</p> */}
             <p>Address: {selectedPatient.address}</p>
             <p>Date: {selectedPatient.date}</p>
             <p>Time: {selectedPatient.time}</p>
@@ -210,7 +210,7 @@ const PatientDetails = ({ selectedPatient }) => {
               Add
             </button>
           </div>
-            <Graph data={serialData} />
+            <Graph setSerialData={setSerialData} />
         </>
       )}
     </div>

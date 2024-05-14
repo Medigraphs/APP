@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Line, LineChart, ResponsiveContainer } from 'recharts';
 
-export const Graph = () => {
+export const Graph = ({setSerialData}) => {
 
     class LineBreakTransformer {
         constructor() {
@@ -19,19 +19,22 @@ export const Graph = () => {
             controller.enqueue(this.container);
         }
     }
+
     const [data, setData] = useState([]);
+    const needToStopRef = useRef(false); // Using a ref instead of state
+    const stopSerial = () => {
+        needToStopRef.current = true; // Update ref value
+    }
 
     const handleSerialData = (newData) => {
         setData(prev => {
-            // Remove the first element if the array length exceeds 20
             if (prev.length >= 500) {
                 prev.shift();
             }
-            // Push a new data point
             return [
                 ...prev,
                 {
-                    y: parseFloat(newData) // Assuming newData is the value received from the serial port
+                    y: parseFloat(newData)
                 }
             ];
         });
@@ -58,16 +61,15 @@ export const Graph = () => {
                         .getReader();
                     
                     try {
-                        while (true) {
+                        while (!needToStopRef.current) { // Check ref value
                             const { value, done } = await reader.read();
                             if (done) {
                                 reader.releaseLock();
                                 await port.close();
                                 break;
                             }
-                            // Assuming value contains the data received from the serial port
                             handleSerialData(value);
-
+                            setSerialData && setSerialData(prev => [...prev, value]);
                         }
                     } catch (error) {
                         console.log(error)
@@ -83,7 +85,6 @@ export const Graph = () => {
 
         fetchDataFromSerialPort();
 
-        // No cleanup is needed for this effect because we don't have any ongoing processes to clean up
     }, []);
 
     return (
@@ -110,6 +111,9 @@ export const Graph = () => {
                 <Line type="monotone" dataKey="y" stroke="#8884d8" isAnimationActive={false} dot={false} strokeWidth={2} />
             </LineChart>
         </ResponsiveContainer>
+        <button onClick={stopSerial}>
+            Stop
+        </button>
         </div>
       </div>
     );
