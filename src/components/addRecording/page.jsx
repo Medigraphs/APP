@@ -68,6 +68,8 @@ const AddRecording = ({ selectedPatient }) => {
   // }, [isFinished]); // Fetch data whenever recordingDialog state changes
 
   const addDataToFirebase = (id, type, date) => {
+    if (serialData.length === 0)
+      return;
     const patient = doc(db, "patients", id);
     updateDoc(patient, {
       recordings: arrayUnion({
@@ -154,25 +156,22 @@ const AddRecording = ({ selectedPatient }) => {
       { usbVendorId: 0x2341, usbProductId: 0x0043 },
       { usbVendorId: 0x2341, usbProductId: 0x0001 },
     ];
-    let port = undefined;
-    let reader = undefined;
     try {
-      port = await navigator.serial.requestPort({ filters });
+      const port = await navigator.serial.requestPort({ filters });
       if (!port) {
-        console.error("No port selected by the user.");
+        console.error('No port selected by the user.');
         return;
       }
       await port.open({ baudRate: 115200 });
 
       while (port.readable) {
-        reader = port.readable
+        const reader = port.readable
           .pipeThrough(new TextDecoderStream())
           .pipeThrough(new TransformStream(new LineBreakTransformer()))
           .getReader();
 
         try {
-          while (!needToStopRef.current) {
-            // Check ref value
+          while (!needToStopRef.current) { // Check ref value
             const { value, done } = await reader.read();
             if (done) {
               reader.releaseLock();
@@ -180,20 +179,19 @@ const AddRecording = ({ selectedPatient }) => {
               break;
             }
             handleSerialData(value);
-            setSerialData && setSerialData((prev) => [...prev, value]);
+            setSerialData && setSerialData(prev => [...prev, value]);
           }
         } catch (error) {
-          console.log(error);
+          console.log(error)
         } finally {
           reader.releaseLock();
           await port.close();
         }
       }
     } catch (error) {
-      console.error("Error reading from serial port:", error);
-    } finally {
-      reader.releaseLock();
-      await port.close();
+      console.error('Error reading from serial port:', error.message);
+      if (error.code === 8)
+        stopSerial()
     }
   };
 
@@ -211,34 +209,34 @@ const AddRecording = ({ selectedPatient }) => {
           <b>Address</b>: {patient.address || "Peer Gaib, Moradabad"}
         </p>
         <label>Date:
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-        />
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
         </label>
-        
+
         <label>Time:
           <input
-          type="time"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-        /></label>
-        
+            type="time"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+          /></label>
+
         <label>Recording List:
-        <Select
-          options={recordingOptions}
-          value={recordings}
-          onChange={(selectedOptions) => setRecordings(selectedOptions)}
-        />
+          <Select
+            options={recordingOptions}
+            value={recordings}
+            onChange={(selectedOptions) => setRecordings(selectedOptions)}
+          />
         </label>
-        
+
         <button type="button" onClick={connectToSerialPort}>
           Add
         </button>
         <button onClick={stopSerial}>Stop</button>
       </div>
-      { showGraph ? <Graph data={data} /> : <></>}
+      {showGraph ? <Graph data={data} /> : <></>}
     </div>
   );
 };
