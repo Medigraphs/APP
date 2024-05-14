@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import './patientDetails.css';
-import { Link, useParams } from "react-router-dom";
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPatients } from "../../store/patientsSlice";
 
@@ -8,6 +8,7 @@ import { fetchPatients } from "../../store/patientsSlice";
 export const PatientDetails = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const state = useSelector((state) => state.fetchPatients);
     const params = useParams();
     const [patient, setPatient] = useState({});
@@ -27,8 +28,8 @@ export const PatientDetails = () => {
     }, [state.data, params.patientId]); // Only update patients when state.data changes
 
     return (
-        <div className="profile-container">
-            <div className="personal-details-container">
+        <div className="patientDetails-container">
+            <div className="patient-details-sub-container">
                 <div className="name-container">
                     <p className="profile-head2">ID: </p>
                     <p>{patient.id}</p>
@@ -51,13 +52,19 @@ export const PatientDetails = () => {
                 </div>
                 <div className="name-container">
                     <p className="profile-head2">Doctor's Name: </p>
-                    <p>{patient.dcotorName}</p>
+                    <p>{patient.doctorName}</p>
                 </div>
                 <div className="gmail-container">
                     <p className="profile-head2">Email: </p>
                     <p>{patient.email}</p>
                 </div>
+                <button type="button" onClick={(e)=>{
+                    e.preventDefault();
+                    navigate(`/profile/${patient.id}/addrecording`)
+                }}>Add recording</button>
+                <button type="button">Show recordings</button>
             </div>
         </div>
+
     )
 }

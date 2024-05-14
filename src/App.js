@@ -17,6 +17,7 @@ import { ProfileDetails } from './components/profileDetails/profileDetails';
 import { AdminPanel } from './components/admin/adminPanel';
 import { useState } from 'react';
 import { PatientDetails } from './components/patientDetails/patientDetails';
+import AddRecording from './components/addRecording/page';
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
               <Route index element={<ProfileDetails />} />
               <Route path='admin' element={<AdminPanel />} />
               <Route path=':patientId' element={<PatientDetails />} />
+              <Route path=":patientId/addrecording" element={<AddRecording />} />
             </Route>
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />

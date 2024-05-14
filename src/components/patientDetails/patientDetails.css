@@ -1,0 +1,39 @@
+.patientDetails-container{
+    padding: 2rem 1.5rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    width: 20rem;
+    height: fit-content;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+
+.patient-details-sub-container{
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.patient-details-sub-container button {
+  font-size: medium;
+  padding: 0.75rem;
+  border-radius: 50px;
+  width: 100%;
+  background-color: #2c3639;
+  border: 2px solid #2c3639;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.2s linear;
+}
+.patient-details-sub-container button:hover {
+  background-color: #4c5052;
+}
+
+.patient-details-sub-container button:last-child {
+  color: #2c3639;
+  background-color: transparent;
+  transition: all 0.2s linear;
+}
+.patient-details-sub-container button:last-child:hover {
+  background-color: #2c3639;
+  color: white;
+}
