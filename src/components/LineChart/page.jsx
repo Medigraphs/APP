@@ -2,7 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Line, LineChart, ResponsiveContainer } from 'recharts';
 
 export const Graph = ({data}) => {
-
+    useEffect(() => {
+      console.log(data);
+    }, []);
     return (
         <div
         style={{

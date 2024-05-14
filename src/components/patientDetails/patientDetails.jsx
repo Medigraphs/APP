@@ -62,7 +62,10 @@ export const PatientDetails = () => {
                     e.preventDefault();
                     navigate(`/profile/${patient.id}/addrecording`)
                 }}>Add recording</button>
-                <button type="button">Show recordings</button>
+                <button type="button" onClick={(e) => {
+                    e.preventDefault();
+                    navigate(`/profile/${patient.id}/showRecordings`)
+                }}>Show recordings</button>
             </div>
         </div>
 

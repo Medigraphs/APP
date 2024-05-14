@@ -5,23 +5,17 @@ import { Graph } from "../LineChart/page";
 import {
   arrayUnion,
   doc,
-  updateDoc,
-  collection,
-  getDocs,
+  updateDoc
 } from "firebase/firestore";
 import { db } from "../../store/firebase";
 import { useParams } from "react-router-dom";
 import { fetchPatients } from "../../store/patientsSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-const AddRecording = ({ selectedPatient }) => {
+const AddRecording = () => {
   const [serialData, setSerialData] = useState([]);
-  const [isFinished, setFinished] = useState(false);
   const [date, setDate] = useState("");
-  // const [isRecording, setIsRecording] = useState(false);
-  // const [recordingDialog, setRecordingsDialog] = useState(false);
   const [recordings, setRecordings] = useState([]);
-  const [fetchedRecordings, setFetchedRecordings] = useState([]);
   const dispatch = useDispatch();
   const [time, setTime] = useState(getCurrentTime()); // Set initial time to the current time
   const state = useSelector((state) => state.fetchPatients);
@@ -51,21 +45,6 @@ const AddRecording = ({ selectedPatient }) => {
     { value: "EOG", label: "EOG" },
     { value: "EMG", label: "EMG" },
   ];
-
-  // const fetchDataFromFirestore = async () => {
-  //   const recordingsCollectionRef = collection(db, "patients");
-  //   const querySnapshot = await getDocs(recordingsCollectionRef);
-  //   querySnapshot.docs
-  //     .filter((data) => data.id == selectedPatient.id)
-  //     .map((data) => data.data().recordings)
-  //     .forEach((doc) => {
-  //       setFetchedRecordings((prev) => [...prev, doc]);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   fetchDataFromFirestore();
-  // }, [isFinished]); // Fetch data whenever recordingDialog state changes
 
   const addDataToFirebase = (id, type, date) => {
     if (serialData.length === 0)
@@ -103,13 +82,6 @@ const AddRecording = ({ selectedPatient }) => {
     // Clear the interval when the component is unmounted
     return () => clearInterval(intervalId);
   }, []);
-
-  // useEffect(() => {}, [isFinished, serialData]);
-
-  // const showRecordings = () => {
-  //   setFetchedRecordings((prev) => [...prev, selectedPatient.recordings]);
-  //   setRecordingsDialog(true);
-  // };
 
   class LineBreakTransformer {
     constructor() {

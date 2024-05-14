@@ -1,0 +1,9 @@
+.category-buttons-container button {
+    background-color: #2c3639 !important;
+    color: white !important;
+}
+
+.category-buttons-container button:disabled {
+    background-color: #2c3639AA !important;
+    color: white !important;
+}
