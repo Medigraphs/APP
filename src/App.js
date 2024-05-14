@@ -33,7 +33,7 @@ function App() {
             <Route path='/profile' element={<Profile setPatient={setPatient} />}>
               <Route index element={<ProfileDetails />} />
               <Route path='admin' element={<AdminPanel />} />
-              <Route path='patientdetails' element={<PatientDetails patient={patientSelected} />} />
+              <Route path=':patientId' element={<PatientDetails />} />
             </Route>
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
