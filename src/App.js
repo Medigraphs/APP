@@ -15,8 +15,12 @@ import { ForgetPassword } from './components/forgetPassword/forgetPassword';
 import { ResetPassword } from './components/resetPassword/resetPassword';
 import { ProfileDetails } from './components/profileDetails/profileDetails';
 import { AdminPanel } from './components/admin/adminPanel';
+import { useState } from 'react';
+import { PatientDetails } from './components/patientDetails/patientDetails';
 
 function App() {
+
+  const [patientSelected, setPatient] = useState(undefined);
   return (
     <Router>
       <Provider store={store}>
@@ -26,9 +30,10 @@ function App() {
             <Route exact path='/' element={<Main />} />
             <Route path='/blogDetail/:title' element={<BlogDetail />} />
             <Route path='/contact-us' element={<ContactUs />} />
-            <Route path='/profile' element={<Profile />}>
+            <Route path='/profile' element={<Profile setPatient={setPatient} />}>
               <Route index element={<ProfileDetails />} />
               <Route path='admin' element={<AdminPanel />} />
+              <Route path='patientdetails' element={<PatientDetails patient={patientSelected} />} />
             </Route>
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />

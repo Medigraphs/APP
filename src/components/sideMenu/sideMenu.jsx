@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "./sideMenu.css";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { fetchPatients } from "../../store/patientsSlice";
 
 
-const SideMenu = () => {
+const SideMenu = ({ setPatient }) => {
 
     const dispatch = useDispatch();
     const state = useSelector((state) => state.fetchPatients);
     const [patients, setPatients] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Dispatch the action to fetch patients
@@ -30,7 +32,9 @@ const SideMenu = () => {
                 <ul className={`patientList`}>
                     {patients.map((patient) => (
                         <li key={patient.id} className={`patientItem`} onClick={() => {
-
+                            console.log(patients.filter(el => el.id === patient.id))
+                            setPatient(patients.filter(el => el.id === patient.id)[0])
+                            navigate('/profile/patientdetails');
                         }}>
                             <div className={`patientName`}>{patient.name}</div>
                             <div className={`patientId`}>({patient.id})</div>
