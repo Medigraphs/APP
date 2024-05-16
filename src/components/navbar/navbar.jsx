@@ -16,13 +16,16 @@ function Navbar() {
   const location = useLocation();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(['jwtInCookie']);
+  const [logoutClicked, setLogoutClicked] = useState(false);
 
   const handleLogout = async () => {
+    setLogoutClicked(true);
     await dispatch(logout(cookies.jwtInCookie));
     removeCookie('jwtInCookie', { path: '/' });
     localStorage.removeItem("user");
     setIsAuthenticated(false);
     navigate('/');
+    setLogoutClicked(false);
   };
 
   useEffect(() => {
@@ -91,9 +94,6 @@ function Navbar() {
         <h1 className="container-1-h1">MediGraphs</h1>
       </div>
       <div className="container-button">
-        <input type="checkbox" className="check-box" name="check" id="check" checked={isMenuOpen} onChange={handleMenuToggle} />
-        <button className="menu-button material-symbols-outlined">menu</button>
-        <button className="close-button material-symbols-outlined">close</button>
         <div className="container-3" >
           <div className="container-3-navbar">
             <Link className={isAtHome ? "pre-active-link" : "link"} to={`/`} onClick={handleClickLink}>
@@ -113,8 +113,8 @@ function Navbar() {
                   Profile
                 </Link>
 
-                <button className="link" onClick={handleLogout}>
-                  Logout
+                <button className="link-logout" onClick={handleLogout}>
+                  <span>{logoutClicked ? "wait" : "Logout"}</span>
                 </button>
               </>
             )}

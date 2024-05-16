@@ -112,7 +112,21 @@
 }
 
 .not-found-h1{
+    font-size: 4rem;
     font-weight: 300;
+    opacity: 0;
+
+    animation: opacity 1.25s linear forwards;
+}
+
+@keyframes opacity{
+    from{
+        opacity: 0;
+        padding-bottom: 4rem;
+    }to{
+        padding-bottom: 0;
+        opacity: 1;
+    }
 }
 
 .not-found-para{

@@ -115,6 +115,7 @@
     justify-content: space-evenly;
     align-items: center;
     padding-right: 1rem;
+    gap: 1rem;
 }
 
 /* links animation */
@@ -133,6 +134,21 @@
     color: rgb(255, 255, 255);
     font-size: large;
     padding: 0.5rem 0.8rem;
+    cursor: pointer;
+}
+
+.link-logout{
+    text-decoration: none;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    font-size: large;
+    border-radius: 0.3rem;
+    padding: 0.5rem 0.8rem;
+    border: 1px solid white;
+}
+
+.link-logout > span{
+    color: black;
 }
 
 .link:hover, .link:focus, .link:active {

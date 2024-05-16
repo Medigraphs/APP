@@ -91,10 +91,10 @@ export const Login = () => {
                 <button type="submit" disabled={loginButton === "wait..."} className="login-button">
                     {loginButton}
                 </button>
-                <div>
+                {/* <div>
                     <p className="register-link-para">Don't have an account ? <Link className="register-link-btn" to={'/register'}>Register now</Link></p>
                     <p className="forgetPassword-link-para">Forget password ? <Link className="forgetPassword-link-btn" to={'/forgetPassword'}>Reset now</Link></p>
-                </div>
+                </div> */}
             </form>
             </div>
         </div>
