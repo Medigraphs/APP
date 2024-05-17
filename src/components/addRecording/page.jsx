@@ -13,7 +13,7 @@ import { fetchPatients } from "../../store/patientsSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const AddRecording = () => {
-  const [serialData, setSerialData] = useState([]);
+  const [serialData, setSerialData] = useState([{ y: 0 }]);
   const [date, setDate] = useState("");
   const [recordings, setRecordings] = useState([]);
   const dispatch = useDispatch();
@@ -106,6 +106,7 @@ const AddRecording = () => {
     setShowGraph(false);
     needToStopRef.current = true; // Update ref value
     addDataToFirebase(patient.id, recordings.value, date + "-" + time);
+    setSerialData([{ y: 0 }]);
   };
 
   const handleSerialData = (newData) => {
