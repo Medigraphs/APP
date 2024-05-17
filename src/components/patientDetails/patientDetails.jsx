@@ -47,10 +47,6 @@ export const PatientDetails = () => {
                     <p>{patient.date}</p>
                 </div>
                 <div className="name-container">
-                    <p className="profile-head2">Time: </p>
-                    <p>{patient.time}</p>
-                </div>
-                <div className="name-container">
                     <p className="profile-head2">Doctor's Name: </p>
                     <p>{patient.doctorName}</p>
                 </div>

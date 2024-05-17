@@ -25,7 +25,9 @@ const SideMenu = () => {
         }
     }, [state.data]); // Only update patients when state.data changes
 
-    return <div className="sideMenu">
+    return <div className="sideMenu" style={{
+        display: patients.length > 0 ? "block" : "none"
+    }}>
         <div className="container2">
             <h3 className="categories">Patients</h3>
             <div className="container2-sub">

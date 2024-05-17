@@ -124,7 +124,6 @@ const AddRecording = () => {
   };
 
   const connectToSerialPort = async () => {
-    setShowGraph(true);
     const filters = [
       { usbVendorId: 0x2341, usbProductId: 0x0043 },
       { usbVendorId: 0x2341, usbProductId: 0x0001 },
@@ -137,36 +136,39 @@ const AddRecording = () => {
       }
       await port.open({ baudRate: 115200 });
 
-      while (port.readable) {
-        const reader = port.readable
-          .pipeThrough(new TextDecoderStream())
-          .pipeThrough(new TransformStream(new LineBreakTransformer()))
-          .getReader();
+      let streaming = true; // Flag to control the streaming loop
 
+      const reader = port.readable
+        .pipeThrough(new TextDecoderStream())
+        .pipeThrough(new TransformStream(new LineBreakTransformer()))
+        .getReader();
+
+      setShowGraph(true);
+      while (streaming) {
         try {
-          while (!needToStopRef.current) { // Check ref value
-            const { value, done } = await reader.read();
-            if (done) {
-              reader.releaseLock();
-              await port.close();
-              break;
-            }
-            handleSerialData(value);
-            setSerialData && setSerialData(prev => [...prev, value]);
+          const { value, done } = await reader.read();
+          if (done) {
+            break; // Exit loop when done
           }
+          handleSerialData(value);
+          setSerialData(prev => [...prev, { y: value }]);
         } catch (error) {
-          console.log(error)
-        } finally {
-          reader.releaseLock();
-          await port.close();
+          console.log(error);
+          break; // Exit loop on error
         }
       }
+
+      // Close the reader and the port
+      await reader.cancel();
+      await port.close();
     } catch (error) {
       console.error('Error reading from serial port:', error.message);
-      if (error.code === 8)
-        stopSerial()
+      if (error.code === 8) {
+        stopSerial();
+      }
     }
   };
+
 
   return (
     <div className="add-recording-root">

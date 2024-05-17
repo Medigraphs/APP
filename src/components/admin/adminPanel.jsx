@@ -7,6 +7,7 @@ import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from '../../store/registerSlice';
+import { fetchPatients } from "../../store/patientsSlice";
 
 export const AdminPanel = () => {
 
@@ -26,20 +27,24 @@ export const AdminPanel = () => {
         ); // Convert FormData to plain object
         console.log("data: ", id, name, mobile, address, date, doctorName)
         setPatientAddStatus(true);
+        let email = name.toLowerCase().replace(/\s+/g, "") + id.toString() + "@" + hosptialId;
+        console.log("email", email);
+        let password = id.toString() + mobile.toString();
         setDoc(doc(db, 'patients', id), {
             name,
             mobile,
             address,
             date,
             doctorName,
+            email
         }).then(() => {
-            let email = name.replace(/\s+/, "") + id.toString() + "@" + hosptialId;
-            let password = id.toString() + mobile.toString();
             dispatch(register({ email, password, name, mobile }));
         }).finally(() => {
             alert("Patient Added!");
             setPatientAddStatus(false);
             resetButtonRef.current.click();
+            dispatch(fetchPatients());
+            navigate("/profile");
         })
     };
 

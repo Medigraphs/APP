@@ -1,6 +1,8 @@
 .profile-supreme-container{
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 5rem;
     padding-block: 3rem;
+    min-height: 90dvh;
 }
