@@ -128,6 +128,13 @@ const AddRecording = () => {
       { usbVendorId: 0x2341, usbProductId: 0x0043 },
       { usbVendorId: 0x2341, usbProductId: 0x0001 },
     ];
+    if (recordings.value != "ECG" &&
+      recordings.value != "EEG" &&
+      recordings.value != "EOG" &&
+      recordings.value != "EMG") {
+      alert("Please Select the appropriate option from the recording section");
+      return
+    }
     try {
       const port = await navigator.serial.requestPort({ filters });
       if (!port) {
