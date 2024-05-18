@@ -23,6 +23,7 @@ const AddRecording = () => {
   const [patient, setPatient] = useState({});
 
   const [showGraph, setShowGraph] = useState(false);
+  const writerRef = useRef(null); // Reference to hold the writer object
 
 
   useEffect(() => {
@@ -45,6 +46,13 @@ const AddRecording = () => {
     { value: "EOG", label: "EOG" },
     { value: "EMG", label: "EMG" },
   ];
+
+  const inputdata = {
+    "ECG": 0,
+    "EEG": 1,
+    "EMG": 2,
+    "EOG": 3
+  }
 
   const addDataToFirebase = (id, type, date) => {
     if (serialData.length === 0)
@@ -128,7 +136,15 @@ const AddRecording = () => {
       { usbVendorId: 0x2341, usbProductId: 0x0043 },
       { usbVendorId: 0x2341, usbProductId: 0x0001 },
     ];
+    console.log(recordings)
     try {
+      if (recordings.value != "ECG" &&
+        recordings.value != "EEG" &&
+        recordings.value != "EOG" &&
+        recordings.value != "EMG") {
+          alert("Please Select the appropriate option from the recording section");
+          return
+        }
       const port = await navigator.serial.requestPort({ filters });
       if (!port) {
         console.error('No port selected by the user.');
@@ -142,6 +158,18 @@ const AddRecording = () => {
         .pipeThrough(new TextDecoderStream())
         .pipeThrough(new TransformStream(new LineBreakTransformer()))
         .getReader();
+
+
+      const writer = port.writable.getWriter();
+      try {
+        // Get a writer instance
+        await writer.write(new TextEncoder().encode(inputdata[recordings.value]));
+      } catch (error) {
+        console.log("Unable to send serial input to the port", error);
+      } finally {
+        await writer.close(); // Close the writer
+      }
+
 
       setShowGraph(true);
       while (streaming) {
