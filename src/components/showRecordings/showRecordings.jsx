@@ -69,7 +69,7 @@ export const ShowRecordings = () => {
                         <div>
                             <ul>
                                 {
-                                    patient.recordings.map((el, index) => (
+                                    patient?.recordings?.map((el, index) => (
                                         <li key={index}>
                                             <button onClick={(e) => {
                                                 e.preventDefault();
@@ -85,9 +85,7 @@ export const ShowRecordings = () => {
                 }
                 {
                     showGraph && (
-                        <div>
                             <Graph data={data} />
-                        </div>
                     )
                 }
             </div>

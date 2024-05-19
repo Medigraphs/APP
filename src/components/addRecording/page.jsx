@@ -158,7 +158,7 @@ const AddRecording = () => {
             break; // Exit loop when done
           }
           handleSerialData(value);
-          setSerialData(prev => [...prev, { y: value }]);
+          setSerialData(prev => [...prev, { y: parseFloat(value) }]);
         } catch (error) {
           console.log(error);
           break; // Exit loop on error

@@ -7,3 +7,7 @@
     background-color: #2c3639AA !important;
     color: white !important;
 }
+
+.add-recording-container {
+    width: fit-content;
+}
