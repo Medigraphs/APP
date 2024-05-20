@@ -100,13 +100,14 @@ const AddRecording = () => {
     }
   }
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([{ y: 0 }]);
   const needToStopRef = useRef(false); // Using a ref instead of state
   const stopSerial = () => {
     setShowGraph(false);
     needToStopRef.current = true; // Update ref value
     addDataToFirebase(patient.id, recordings.value, date + "-" + time);
     setSerialData([{ y: 0 }]);
+    setData([{ y: 0 }])
   };
 
   const handleSerialData = (newData) => {
@@ -124,6 +125,7 @@ const AddRecording = () => {
   };
 
   const connectToSerialPort = async () => {
+    needToStopRef.current = false;
     const filters = [
       { usbVendorId: 0x2341, usbProductId: 0x0043 },
       { usbVendorId: 0x2341, usbProductId: 0x0001 },
@@ -218,7 +220,7 @@ const AddRecording = () => {
         </button>
         <button onClick={stopSerial}>Stop</button>
       </div>
-      {showGraph ? <Graph data={data} isLive={true} /> : <></>}
+      {showGraph ? <Graph data={data} isLive={true} autoGenerateY={recordings.value === "EEG"}/> : <></>}
     </div>
   );
 };
