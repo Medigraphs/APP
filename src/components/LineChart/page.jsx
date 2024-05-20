@@ -24,8 +24,8 @@ export const Graph = ({ data, isLive, autoGenerateY }) => {
     setWidth((2 * data.length) + "px");
     if (!autoGenerateY) {
       let abs = Math.ceil(Math.max(getMaxY(data), Math.abs(getMinY(data))));
-      setMaxY(abs + 10);
-      setMinY(-abs - 10);
+      setMaxY(abs );
+      setMinY(-abs );
     } else {
       setMinY('auto');
       setMaxY('auto');
