@@ -2,42 +2,33 @@ import React, { useEffect, useState, useRef } from "react";
 import Select from "react-select";
 import "./addRecording.css";
 import { Graph } from "../LineChart/page";
-import {
-  arrayUnion,
-  doc,
-  updateDoc
-} from "firebase/firestore";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../store/firebase";
 import { useParams } from "react-router-dom";
 import { fetchPatients } from "../../store/patientsSlice";
 import { useDispatch, useSelector } from "react-redux";
-
 const AddRecording = () => {
   const [serialData, setSerialData] = useState([{ y: 0 }]);
   const [date, setDate] = useState("");
-  const [recordings, setRecordings] = useState([]);
+  const [recordings, setRecordings] = useState(null);
   const dispatch = useDispatch();
-  const [time, setTime] = useState(getCurrentTime()); // Set initial time to the current time
+  const [time, setTime] = useState(getCurrentTime());
   const state = useSelector((state) => state.fetchPatients);
   const params = useParams();
   const [patient, setPatient] = useState({});
-
+  const [readyToUpload, setUploadState] = useState(false);
   const [showGraph, setShowGraph] = useState(false);
 
-
   useEffect(() => {
-    // Dispatch the action to fetch patients
     dispatch(fetchPatients());
-  }, [dispatch, params.patientId]); // Make sure to include dispatch in the dependency array
+  }, [dispatch]);
 
-  // Update patients state when the fetchPatients state changes
   useEffect(() => {
     if (state.data) {
-      console.log(state.data);
-      // Update patients state with the new data
-      setPatient(state.data.filter((el) => el.id === params.patientId)[0]);
+      const currentPatient = state.data.find((el) => el.id === params.patientId);
+      setPatient(currentPatient || {});
     }
-  }, [state.data, params.patientId]); // Only update patients when state.data changes
+  }, [state.data, params.patientId]);
 
   const recordingOptions = [
     { value: "EEG", label: "EEG" },
@@ -46,26 +37,23 @@ const AddRecording = () => {
     { value: "EMG", label: "EMG" },
   ];
 
-  const addDataToFirebase = (id, type, date) => {
-    if (serialData.length === 0)
-      return;
-    const patient = doc(db, "patients", id);
-    updateDoc(patient, {
-      recordings: arrayUnion({
-        type: type,
-        date: date,
-        data: serialData,
-      }),
-    })
-      .then(() => {
-        console.log("added");
-      })
-      .catch((e) => {
-        console.error(e);
+  const addDataToFirebase = async (id, type, date) => {
+    if (serialData.length === 0) return;
+    const patientRef = doc(db, "patients", id);
+    try {
+      await updateDoc(patientRef, {
+        recordings: arrayUnion({
+          type,
+          date,
+          data: serialData,
+        }),
       });
+      console.log("Data added to Firebase");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
-  // Function to get the current time in HH:mm format
   function getCurrentTime() {
     const now = new Date();
     const hours = now.getHours().toString().padStart(2, "0");
@@ -74,12 +62,9 @@ const AddRecording = () => {
   }
 
   useEffect(() => {
-    // Update the time field to the current time every minute
     const intervalId = setInterval(() => {
       setTime(getCurrentTime());
     }, 60000);
-
-    // Clear the interval when the component is unmounted
     return () => clearInterval(intervalId);
   }, []);
 
@@ -101,83 +86,68 @@ const AddRecording = () => {
   }
 
   const [data, setData] = useState([{ y: 0 }]);
-  const needToStopRef = useRef(false); // Using a ref instead of state
-  const stopSerial = () => {
-    setShowGraph(false);
-    needToStopRef.current = true; // Update ref value
-    addDataToFirebase(patient.id, recordings.value, date + "-" + time);
-    setSerialData([{ y: 0 }]);
-    setData([{ y: 0 }])
+  const needToStopRef = useRef(false);
+  const reader = useRef(undefined);
+
+  const stopSerial = async () => {
+    needToStopRef.current = true;
+    if (reader.current) {
+      await reader.current.cancel();
+      reader.current.releaseLock();
+    }
+    setData([{ y: 0 }]);
+    setUploadState(true);
   };
 
   const handleSerialData = (newData) => {
     setData((prev) => {
-      if (prev.length >= 500) {
-        prev.shift();
-      }
-      return [
-        ...prev,
-        {
-          y: parseFloat(newData),
-        },
-      ];
+      if (prev.length >= 500) prev.shift();
+      return [...prev, { y: parseFloat(newData) }];
     });
   };
 
   const connectToSerialPort = async () => {
+    if (!recordings) {
+      alert("Please select the appropriate option from the recording section");
+      return;
+    }
     needToStopRef.current = false;
+    setUploadState(false);
     const filters = [
       { usbVendorId: 0x2341, usbProductId: 0x0043 },
       { usbVendorId: 0x2341, usbProductId: 0x0001 },
     ];
-    if (recordings.value != "ECG" &&
-      recordings.value != "EEG" &&
-      recordings.value != "EOG" &&
-      recordings.value != "EMG") {
-      alert("Please Select the appropriate option from the recording section");
-      return
-    }
     try {
       const port = await navigator.serial.requestPort({ filters });
       if (!port) {
-        console.error('No port selected by the user.');
+        console.error("No port selected by the user.");
         return;
       }
-      await port.open({ baudRate: 115200 });
+      try {
+        await port.open({ baudRate: 115200 });
+      } catch (error) { }
 
-      let streaming = true; // Flag to control the streaming loop
-
-      const reader = port.readable
+      reader.current = port.readable
         .pipeThrough(new TextDecoderStream())
         .pipeThrough(new TransformStream(new LineBreakTransformer()))
         .getReader();
 
       setShowGraph(true);
-      while (streaming) {
-        try {
-          const { value, done } = await reader.read();
-          if (done) {
-            break; // Exit loop when done
-          }
-          handleSerialData(value);
-          setSerialData(prev => [...prev, { y: parseFloat(value) }]);
-        } catch (error) {
-          console.log(error);
-          break; // Exit loop on error
-        }
+      while (!needToStopRef.current) {
+        const { value, done } = await reader.current.read();
+        if (done) break;
+        handleSerialData(value);
+        setSerialData((prev) => [...prev, { y: parseFloat(value) }]);
       }
-
-      // Close the reader and the port
-      await reader.cancel();
-      await port.close();
     } catch (error) {
-      console.error('Error reading from serial port:', error.message);
-      if (error.code === 8) {
-        stopSerial();
+      console.error("Error reading from serial port:", error.message);
+      stopSerial();
+    } finally {
+      if (reader.current) {
+        reader.current.releaseLock();
       }
     }
   };
-
 
   return (
     <div className="add-recording-root">
@@ -192,22 +162,18 @@ const AddRecording = () => {
         <p>
           <b>Address</b>: {patient.address || "Peer Gaib, Moradabad"}
         </p>
-        <label>Date:
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
+        <label>
+          Date:
+          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
         </label>
 
-        <label>Time:
-          <input
-            type="time"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-          /></label>
+        <label>
+          Time:
+          <input type="time" value={time} onChange={(e) => setTime(e.target.value)} />
+        </label>
 
-        <label>Recording List:
+        <label>
+          Recording List:
           <Select
             options={recordingOptions}
             value={recordings}
@@ -219,8 +185,41 @@ const AddRecording = () => {
           Add
         </button>
         <button onClick={stopSerial}>Stop</button>
+        {showGraph && (
+          <>
+            <Graph data={readyToUpload ? serialData : data} isLive={true} autoGenerateY={recordings?.value === "EEG"} />
+            <button
+              style={{
+                width: "200px",
+                display: readyToUpload ? "block" : "none"
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+                setShowGraph(false);
+                setData([{ y: 0 }]);
+                setSerialData([{ y: 0 }]);
+              }}
+            >
+              Reset
+            </button>
+            <button
+              style={{
+                width: "200px",
+                display: readyToUpload ? "block" : "none"
+              }}
+              disabled={!readyToUpload}
+              onClick={(e) => {
+                e.preventDefault();
+                addDataToFirebase(patient.id, recordings?.value, `${date}-${time}`);
+                setShowGraph(false);
+                setSerialData([{ y: 0 }]);
+              }}
+            >
+              Upload
+            </button>
+          </>
+        )}
       </div>
-      {showGraph ? <Graph data={data} isLive={true} autoGenerateY={recordings.value === "EEG"}/> : <></>}
     </div>
   );
 };
