@@ -218,7 +218,7 @@ const AddRecording = () => {
         </button>
         <button onClick={stopSerial}>Stop</button>
       </div>
-      {showGraph ? <Graph data={data} /> : <></>}
+      {showGraph ? <Graph data={data} isLive={true} /> : <></>}
     </div>
   );
 };

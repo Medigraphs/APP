@@ -85,7 +85,7 @@ export const ShowRecordings = () => {
                 }
                 {
                     showGraph && (
-                            <Graph data={data} />
+                            <Graph data={data} isLive={false} />
                     )
                 }
             </div>

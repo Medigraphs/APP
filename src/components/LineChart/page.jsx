@@ -1,18 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, YAxis } from 'recharts';
 
-export const Graph = ({ data }) => {
+export const Graph = ({ data, isLive }) => {
   const [width, setWidth] = useState("0px");
-    // Calculate the minimum and maximum y values
-    const getMinY = (data) => Math.min(...data.map(item => parseFloat(item.y)));
-    const getMaxY = (data) => Math.max(...data.map(item => parseFloat(item.y)));
-  
-    const minY = getMinY(data);
-    const maxY = getMaxY(data);
+  // Calculate the minimum and maximum y values
+  const getMinY = (data) => Math.min(...data.map(item => parseFloat(item.y)));
+  const getMaxY = (data) => Math.max(...data.map(item => parseFloat(item.y)));
+
+  const minY = getMinY(data);
+  const maxY = getMaxY(data);
   useEffect(() => {
     // console.log(data);
-     setWidth((2 * data.length) + "px");
-    console.log(minY, maxY);
+    setWidth((2 * data.length) + "px");
   }, [data]);
 
   return (
@@ -34,7 +33,7 @@ export const Graph = ({ data }) => {
       >
         <ResponsiveContainer>
           <LineChart data={data}>
-          <YAxis domain={[minY - 10, maxY + 10]} /> 
+            <YAxis domain={[isLive ? 'auto' : minY - 10, isLive ? 'auto' : maxY + 10]} />
             <CartesianGrid />
             <Line type="monotone" dataKey="y" stroke="#8884d8" isAnimationActive={false} dot={false} strokeWidth={2} />
           </LineChart>
