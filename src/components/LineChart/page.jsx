@@ -24,13 +24,13 @@ export const Graph = ({ data, isLive, autoGenerateY }) => {
     setWidth((2 * data.length) + "px");
     if (!autoGenerateY) {
       let abs = Math.ceil(Math.max(getMaxY(data), Math.abs(getMinY(data))));
-      setMaxY(abs );
-      setMinY(-abs );
+      setMaxY(abs);
+      setMinY(-abs);
     } else {
       setMinY('auto');
       setMaxY('auto');
     }
-    }, [data]);
+  }, [data]);
 
   return (
     <>
@@ -54,7 +54,7 @@ export const Graph = ({ data, isLive, autoGenerateY }) => {
             <LineChart data={data}>
               <YAxis domain={[minY, maxY]} />
               <CartesianGrid />
-              <Line type="monotone" dataKey="y" stroke="#8884d8" isAnimationActive={false} dot={false} strokeWidth={2} />
+              <Line type="monotone" dataKey="y" stroke="#8884d8" isAnimationActive={!isLive} dot={false} strokeWidth={2} />
             </LineChart>
           </ResponsiveContainer>
         </div>

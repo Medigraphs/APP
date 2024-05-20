@@ -69,15 +69,19 @@ export const ShowRecordings = () => {
                         <div>
                             <ul>
                                 {
-                                    patient?.recordings?.map((el, index) => (
-                                        <li key={index}>
-                                            <button onClick={(e) => {
-                                                e.preventDefault();
-                                                setShowGraph(true);
-                                                setData(() => el.data);
-                                            }}>{el.date}</button>
-                                        </li>
-                                    ))
+                                    state.isLoading ?
+                                        <h1>Loading....</h1>
+                                        :
+                                        patient?.recordings?.map((el, index) => (
+                                            el.type == recordingType &&
+                                            <li key={index}>
+                                                <button onClick={(e) => {
+                                                    e.preventDefault();
+                                                    setShowGraph(true);
+                                                    setData(() => el.data);
+                                                }}>{el.date}</button>
+                                            </li>
+                                        ))
                                 }
                             </ul>
                         </div>
@@ -85,7 +89,7 @@ export const ShowRecordings = () => {
                 }
                 {
                     showGraph && (
-                            <Graph data={data} isLive={false} />
+                        <Graph data={data} isLive={false} />
                     )
                 }
             </div>
