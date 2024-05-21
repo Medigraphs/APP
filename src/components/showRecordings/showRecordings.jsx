@@ -6,6 +6,7 @@ import { db } from "../../store/firebase";
 import { useParams } from "react-router-dom";
 import { fetchPatients } from "../../store/patientsSlice";
 import { useDispatch, useSelector } from "react-redux";
+import Loading from "../loading/loader";
 export const ShowRecordings = () => {
     const dispatch = useDispatch();
     const state = useSelector((state) => state.fetchPatients);
@@ -70,7 +71,7 @@ export const ShowRecordings = () => {
                             <ul>
                                 {
                                     state.isLoading ?
-                                        <h1>Loading....</h1>
+                                    <Loading />
                                         :
                                         patient?.recordings?.map((el, index) => (
                                             el.type == recordingType &&

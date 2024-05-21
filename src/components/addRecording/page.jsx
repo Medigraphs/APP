@@ -7,6 +7,8 @@ import { db } from "../../store/firebase";
 import { useParams } from "react-router-dom";
 import { fetchPatients } from "../../store/patientsSlice";
 import { useDispatch, useSelector } from "react-redux";
+import Loader from "../loading/loader";
+
 const AddRecording = () => {
   const [serialData, setSerialData] = useState([{ y: 0 }]);
   const [date, setDate] = useState("");
@@ -18,6 +20,7 @@ const AddRecording = () => {
   const [patient, setPatient] = useState({});
   const [readyToUpload, setUploadState] = useState(false);
   const [showGraph, setShowGraph] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     dispatch(fetchPatients());
@@ -53,6 +56,8 @@ const AddRecording = () => {
       console.error(e);
     }
   };
+
+  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
   function getCurrentTime() {
     const now = new Date();
@@ -92,8 +97,8 @@ const AddRecording = () => {
   const stopSerial = async () => {
     needToStopRef.current = true;
     if (reader.current) {
-      await reader.current.cancel();
-      reader.current.releaseLock();
+      reader.current.cancel();
+      // reader.current.releaseLock();
     }
     setData([{ y: 0 }]);
     setUploadState(true);
@@ -107,11 +112,11 @@ const AddRecording = () => {
   };
 
   const connectToSerialPort = async () => {
+    needToStopRef.current = false;
     if (!recordings) {
       alert("Please select the appropriate option from the recording section");
       return;
     }
-    needToStopRef.current = false;
     setUploadState(false);
     const filters = [
       { usbVendorId: 0x2341, usbProductId: 0x0043 },
@@ -131,9 +136,11 @@ const AddRecording = () => {
         .pipeThrough(new TextDecoderStream())
         .pipeThrough(new TransformStream(new LineBreakTransformer()))
         .getReader();
-
+      delay(3000).then(() => {
+        setIsLoading(false);
+      })
       setShowGraph(true);
-      while (!needToStopRef.current) {
+      while (!needToStopRef.current && reader.current) {
         const { value, done } = await reader.current.read();
         if (done) break;
         handleSerialData(value);
@@ -187,36 +194,53 @@ const AddRecording = () => {
         <button onClick={stopSerial}>Stop</button>
         {showGraph && (
           <>
-            <Graph data={readyToUpload ? serialData : data} isLive={true} autoGenerateY={recordings?.value === "EEG"} />
-            <button
-              style={{
-                width: "200px",
-                display: readyToUpload ? "block" : "none"
-              }}
-              onClick={(e) => {
-                e.preventDefault();
-                setShowGraph(false);
-                setData([{ y: 0 }]);
-                setSerialData([{ y: 0 }]);
-              }}
-            >
-              Reset
-            </button>
-            <button
-              style={{
-                width: "200px",
-                display: readyToUpload ? "block" : "none"
-              }}
-              disabled={!readyToUpload}
-              onClick={(e) => {
-                e.preventDefault();
-                addDataToFirebase(patient.id, recordings?.value, `${date}-${time}`);
-                setShowGraph(false);
-                setSerialData([{ y: 0 }]);
-              }}
-            >
-              Upload
-            </button>
+            {
+              isLoading ?
+                <div
+                  style={{
+                    width: "1000px",
+                  }}
+                >
+                  <Loader height={"300px"} />
+                </div>
+                :
+                <>
+                  <Graph data={readyToUpload ? serialData : data} isLive={true} autoGenerateY={recordings?.value === "EEG"} />
+                  <button
+                    style={{
+                      width: "200px",
+                      display: readyToUpload ? "block" : "none"
+                    }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setShowGraph(false);
+                      setData([{ y: 0 }]);
+                      setSerialData([{ y: 0 }]);
+
+                      setIsLoading(true);
+                    }}
+                  >
+                    Reset
+                  </button>
+                  <button
+                    style={{
+                      width: "200px",
+                      display: readyToUpload ? "block" : "none"
+                    }}
+                    disabled={!readyToUpload}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      addDataToFirebase(patient.id, recordings?.value, `${date}-${time}`);
+                      setShowGraph(false);
+                      setSerialData([{ y: 0 }]);
+
+                      setIsLoading(true);
+                    }}
+                  >
+                    Upload
+                  </button>
+                </>
+            }
           </>
         )}
       </div>
