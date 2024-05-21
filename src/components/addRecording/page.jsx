@@ -4,9 +4,11 @@ import "./addRecording.css";
 import { Graph } from "../LineChart/page";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../store/firebase";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchPatients } from "../../store/patientsSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { jwtDecode } from "jwt-decode";
+import { useCookies } from "react-cookie";
 import Loader from "../loading/loader";
 
 const AddRecording = () => {
@@ -21,6 +23,30 @@ const AddRecording = () => {
   const [readyToUpload, setUploadState] = useState(false);
   const [showGraph, setShowGraph] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [cookies] = useCookies(["jwtInCookie"]);
+  const [token, setToken] = useState({});
+  const [user, setUser] = useState(null);
+  const [isAdmin, setAdmin] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userFromLocalStorage = JSON.parse(localStorage.getItem("user"));
+    setUser(userFromLocalStorage);
+    console.log(user);
+  }, []);
+
+  useEffect(() => {
+    if (cookies.jwtInCookie) {
+      setToken(jwtDecode(cookies.jwtInCookie));
+      console.log(token);
+      if (token?.email?.substring(0, 5) === "admin") {
+        setAdmin(true);
+      }
+    } else {
+      navigate("/login");
+    }
+  }, [user]);
 
   useEffect(() => {
     dispatch(fetchPatients());

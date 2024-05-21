@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import './patientDetails.css';
-import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPatients } from "../../store/patientsSlice";
-
+import { jwtDecode } from "jwt-decode";
+import { useCookies } from "react-cookie";
 
 export const PatientDetails = () => {
 
@@ -12,6 +13,29 @@ export const PatientDetails = () => {
     const state = useSelector((state) => state.fetchPatients);
     const params = useParams();
     const [patient, setPatient] = useState({});
+
+    const [cookies] = useCookies(["jwtInCookie"]);
+    const [token, setToken] = useState({});
+    const [user, setUser] = useState(null);
+    const [isAdmin, setAdmin] = useState(false);
+  
+    useEffect(() => {
+      const userFromLocalStorage = JSON.parse(localStorage.getItem("user"));
+      setUser(userFromLocalStorage);
+      console.log(user);
+    }, []);
+  
+    useEffect(() => {
+      if (cookies.jwtInCookie) {
+        setToken(jwtDecode(cookies.jwtInCookie));
+        console.log(token);
+        if (token?.email?.substring(0, 5) === "admin") {
+          setAdmin(true);
+        }
+      } else {
+        navigate("/login");
+      }
+    }, [user]);
 
     useEffect(() => {
         // Dispatch the action to fetch patients
@@ -25,7 +49,7 @@ export const PatientDetails = () => {
             // Update patients state with the new data
             setPatient(state.data.filter(el => el.id === params.patientId)[0]);
         }
-    }, [state.data, params.patientId]); // Only update patients when state.data changes
+    }, [state.data, params.patientId]);
 
     return (
         <div className="patientDetails-container">
