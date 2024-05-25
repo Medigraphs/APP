@@ -11,7 +11,7 @@ import { useCookies } from "react-cookie";
 
 import Loading from "../loading/loader";
 export const ShowRecordings = ({ selectedPatient }) => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const state = useSelector((state) => state.fetchPatients);
     const params = useParams();
     const [patient, setPatient] = useState({});
@@ -47,11 +47,11 @@ export const ShowRecordings = ({ selectedPatient }) => {
         }
     }, [user]);
 
-    useEffect(() => {
-        // Dispatch the action to fetch patients
-        if (!selectedPatient)
-            dispatch(fetchPatients());
-    }, [dispatch, params.patientId]); // Make sure to include dispatch in the dependency array
+    // useEffect(() => {
+    //     // Dispatch the action to fetch patients
+    //     // if (!selectedPatient)
+    //     //     dispatch(fetchPatients());
+    // }, [dispatch, params.patientId]); // Make sure to include dispatch in the dependency array
 
     // Update patients state when the fetchPatients state changes
     useEffect(() => {

@@ -40,7 +40,7 @@ export const PatientDetails = () => {
     useEffect(() => {
         // Dispatch the action to fetch patients
         dispatch(fetchPatients());
-    }, [dispatch, params.patientId]); // Make sure to include dispatch in the dependency array
+    }, [dispatch]); // Make sure to include dispatch in the dependency array
 
     // Update patients state when the fetchPatients state changes
     useEffect(() => {

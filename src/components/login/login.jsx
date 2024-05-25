@@ -17,11 +17,11 @@ export const Login = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['jwtInCookie']);
 
     useEffect(() => {
-        setjwt(state.data?.accessToken);
+        setjwt(state.data?.accessToken.accessToken);
         console.log(state.data)
         if (jwt) {
             setCookie('jwtInCookie', jwt, {
-                expires: new Date(Date.now() + 1 * 60 * 60 * 1000),
+                expires: new Date(state.data.accessToken.expirationTime)
             });
             localStorage.setItem("user", JSON.stringify({
                 displayName: state.data.displayName,

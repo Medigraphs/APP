@@ -1,21 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {auth} from './firebase'
+import { auth } from './firebase'
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 export const login = createAsyncThunk("login", async ({ email, password }) => {
-    let res =undefined;
+    let res = undefined;
     try {
         res = await signInWithEmailAndPassword(auth, email, password);
         console.log(res.user);
         return {
-            accessToken: res.user.accessToken,
+            accessToken: {
+                accessToken: res.user.stsTokenManager.accessToken,
+                expirationTime: res.user.stsTokenManager.expirationTime
+            },
             displayName: res.user.displayName,
             email: res.user.email,
             photoURL: res.user.photoURL,
             phoneNumber: res.user.phoneNumber,
             uid: res.user.uid
         };
-    } catch(e) {
+    } catch (e) {
         console.log(e);
         return e;
     }

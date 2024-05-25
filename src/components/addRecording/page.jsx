@@ -48,9 +48,9 @@ const AddRecording = () => {
     }
   }, [user]);
 
-  useEffect(() => {
-    dispatch(fetchPatients());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchPatients());
+  // }, [dispatch]);
 
   useEffect(() => {
     if (state.data) {
