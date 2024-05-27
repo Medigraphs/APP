@@ -19,6 +19,7 @@ export const ShowRecordings = ({ selectedPatient }) => {
     const [recordingType, setRecordingType] = useState("");
     const [data, setData] = useState([]);
     const navigate = useNavigate();
+    const recordFound = useRef(false);
 
     const [cookies] = useCookies(["jwtInCookie"]);
     const [token, setToken] = useState({});
@@ -29,7 +30,6 @@ export const ShowRecordings = ({ selectedPatient }) => {
         const userFromLocalStorage = JSON.parse(localStorage.getItem("user"));
         setUser(userFromLocalStorage);
         console.log(user);
-        console.log(selectedPatient)
         if (selectedPatient) {
             setPatient(selectedPatient)
         }
@@ -67,8 +67,8 @@ export const ShowRecordings = ({ selectedPatient }) => {
         <>
             {
                 patient ?
-                    <div className="add-recording-root">
-                        <div className="add-recording-container">
+                    <div className="show-recording-root">
+                        <div className="show-recording-container">
                             <h2>Patient Details</h2>
                             <p>
                                 <b>Name</b>: {patient.name}
@@ -83,47 +83,63 @@ export const ShowRecordings = ({ selectedPatient }) => {
                                 <button onClick={(e) => {
                                     e.preventDefault();
                                     setRecordingType("ECG");
+                                    setShowGraph(false);
                                 }}>ECG</button>
                                 <button onClick={(e) => {
                                     e.preventDefault();
                                     setRecordingType("EEG");
+                                    setShowGraph(false);
                                 }}>EEG</button>
                                 <button onClick={(e) => {
                                     e.preventDefault();
                                     setRecordingType("EOG");
+                                    setShowGraph(false);
                                 }}>EOG</button>
                                 <button onClick={(e) => {
                                     e.preventDefault();
                                     setRecordingType("EMG");
+                                    setShowGraph(false);
                                 }}>EMG</button>
                             </div>
                             {
                                 recordingType && (
-                                    <div>
+                                    <div className="show-recording-container" style={{
+                                        width: "100%"
+                                    }}>
                                         <ul>
                                             {
-                                                state.isLoading ?
-                                                    <Loading />
-                                                    :
-                                                    patient?.recordings?.map((el, index) => (
-                                                        el.type == recordingType &&
-                                                        <li key={index}>
+                                                (patient.recordings ? patient.recordings?.map((el, index) => {
+                                                    if (recordingType === el.type) {
+                                                        return <li key={index}>
                                                             <button onClick={(e) => {
                                                                 e.preventDefault();
                                                                 setShowGraph(true);
                                                                 setData(() => el.data);
                                                             }}>{el.date}</button>
                                                         </li>
-                                                    ))
+                                                    }
+                                                    return (
+                                                        <div>
+                                                            <h1>Data Not Found!!!</h1>
+                                                        </div>)
+                                                }) : <div>
+                                                    <h1>Data Not Found!!!</h1>
+                                                </div>)
                                             }
                                         </ul>
                                     </div>
                                 )
                             }
                             {
-                                showGraph && (
-                                    <Graph data={data} isLive={false} />
-                                )
+                                showGraph && data.length > 0 ? (
+                                    <div className="show-recording-container" style={{
+                                        width: "100%"
+                                    }}>
+                                        <Graph data={data} isLive={false} autoGenerateY={false} />
+                                    </div>
+                                ) :
+                                    <>
+                                    </>
                             }
                         </div>
                     </div>

@@ -7,3 +7,69 @@
     background-color: #2c3639AA !important;
     color: white !important;
 }
+
+.show-recording-root {
+    width: fit-content;
+    height: fit-content;
+}
+
+.show-recording-container {
+    display: flex;
+    flex-direction: column;
+    width: max(1100px, 100%);
+    padding: 1.25rem 2rem;
+    gap: 0.5rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    height: fit-content;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.19), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+
+.show-recording-container>h2 {
+    font-weight: 500;
+}
+
+.show-recording-container>p {
+    font-size: medium;
+}
+
+.show-recording-container>label {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.show-recording-container>label>input {
+    /* margin-left: 0.5rem; */
+}
+
+.show-recording-container button {
+    font-size: medium;
+    padding: 0.75rem;
+    border-radius: 50px;
+    /* font-size: 1.25rem; */
+    width: 100%;
+    background-color: #2c3639;
+    border: 2px solid #2c3639;
+    cursor: pointer;
+    color: white;
+    margin-top: .5rem;
+    transition: background-color 0.2s linear;
+}
+
+.show-recording-container button:hover {
+    background-color: #4c5052;
+}
+
+.show-recording-container button:last-child {
+    color: #2c3639;
+    background-color: transparent;
+    transition: all 0.2s linear;
+}
+
+.show-recording-container button:last-child:hover {
+    background-color: #2c3639;
+    color: white;
+}
